@@ -1,7 +1,2 @@
-import React from 'react';
+// will later
 
-const ProductPage = () => {
-    return <div>Product Details Page</div>;
-};
-
-export default ProductPage;

@@ -18,7 +18,9 @@ export const fetchTeaById = async (id) => {
     return response.data;
 };
 
+
 export const fetchTeasByType = async (type) => {
     const response = await axios.get(`${BASE_URL}/type/${type}`);
     return response.data.products;
 };
+
