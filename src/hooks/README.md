@@ -1,3 +1,3 @@
 # Custom Hooks
 
-This directory contains all custom React hooks.
+This directory contains custom React hooks.

@@ -1,3 +1,3 @@
-# Pages
+# Pages Directory
 
-This directory contains all the page components.
+This directory contains React components that represent entire pages.
