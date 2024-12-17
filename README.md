@@ -16,13 +16,12 @@ Welcome to the Tea Haven E-commerce frontend repository. This README provides an
 Tea Haven is an e-commerce platform for tea enthusiasts. This repository contains the frontend codebase, which is responsible for the user interface and client-side functionality.
 
 ## Technologies Used
-
-- React
-- Redux
-- React Router
-- Axios
-- Styled Components
-- Jest
+- React: A JavaScript library for building user interfaces.
+- Redux: A predictable state container for JavaScript apps.
+- React Router: A collection of navigational components for React applications.
+- Axios: A promise-based HTTP client for the browser and Node.js.
+- Styled Components: A library for styling React components using tagged template literals.
+- Jest: A delightful JavaScript testing framework with a focus on simplicity.
 
 ## Getting Started
 
