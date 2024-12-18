@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
 import TeaProductCard from '../components/features/tea/TeaProductCard';
 import './styles/ProductPage.css';
+import '../styles/animations.css';
 
 const ProductPage = () => {
   const { id } = useParams();
+  const { addItem } = useCart();
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState('description');
+  const [isAdding, setIsAdding] = useState(false);
 
   // This would come from your API/state management
   const product = {
@@ -45,30 +49,27 @@ const ProductPage = () => {
     ]
   };
 
-  const relatedProducts = [
-    // Add related products data here
-  ];
-
   const handleQuantityChange = (value) => {
     const newQuantity = Math.max(1, Math.min(99, value));
     setQuantity(newQuantity);
   };
 
   const handleAddToCart = () => {
-    // Add to cart logic
-    console.log(`Adding ${quantity} of ${product.title} to cart`);
+    setIsAdding(true);
+    addItem(product, quantity);
+    setTimeout(() => setIsAdding(false), 1000);
   };
 
   return (
-    <div className="product-page">
+    <div className="product-page animate-fadeIn">
       <div className="container">
-        <div className="product-container">
+        <div className="product-container stagger-children">
           {/* Image Gallery */}
           <div className="image-gallery">
             <img 
               src={product.images[selectedImage]} 
               alt={product.title} 
-              className="main-image"
+              className="main-image animate-scaleIn"
               onError={(e) => {
                 e.target.src = '/images/tea-placeholder.jpg';
               }}
@@ -79,7 +80,7 @@ const ProductPage = () => {
                   key={index}
                   src={image}
                   alt={`${product.title} view ${index + 1}`}
-                  className={`thumbnail ${selectedImage === index ? 'active' : ''}`}
+                  className={`thumbnail hover-scale ${selectedImage === index ? 'active' : ''}`}
                   onClick={() => setSelectedImage(index)}
                   onError={(e) => {
                     e.target.src = '/images/tea-placeholder.jpg';
@@ -91,15 +92,15 @@ const ProductPage = () => {
 
           {/* Product Info */}
           <div className="product-info">
-            <h1 className="product-title">{product.title}</h1>
-            <p className="product-price">${product.price.toFixed(2)}</p>
-            <p className="product-description">{product.description}</p>
+            <h1 className="product-title animate-slideInRight">{product.title}</h1>
+            <p className="product-price animate-slideInRight">${product.price.toFixed(2)}</p>
+            <p className="product-description animate-slideInRight">{product.description}</p>
 
-            <div className="quantity-selector">
+            <div className="quantity-selector animate-slideInRight">
               <span className="quantity-label">Quantity:</span>
               <div className="quantity-controls">
                 <button 
-                  className="quantity-button"
+                  className="quantity-button button-press"
                   onClick={() => handleQuantityChange(quantity - 1)}
                 >
                   -
@@ -113,7 +114,7 @@ const ProductPage = () => {
                   className="quantity-input"
                 />
                 <button 
-                  className="quantity-button"
+                  className="quantity-button button-press"
                   onClick={() => handleQuantityChange(quantity + 1)}
                 >
                   +
@@ -122,36 +123,27 @@ const ProductPage = () => {
             </div>
 
             <button 
-              className="button button-primary add-to-cart"
+              className={`button button-primary add-to-cart button-press ${isAdding ? 'animate-bounce' : ''}`}
               onClick={handleAddToCart}
             >
               Add to Cart
             </button>
 
             {/* Product Details Tabs */}
-            <div className="product-details">
+            <div className="product-details animate-slideInUp">
               <div className="details-tabs">
-                <div 
-                  className={`tab ${activeTab === 'description' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('description')}
-                >
-                  Description
-                </div>
-                <div 
-                  className={`tab ${activeTab === 'ingredients' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('ingredients')}
-                >
-                  Ingredients
-                </div>
-                <div 
-                  className={`tab ${activeTab === 'brewing' ? 'active' : ''}`}
-                  onClick={() => setActiveTab('brewing')}
-                >
-                  Brewing Guide
-                </div>
+                {['description', 'ingredients', 'brewing'].map((tab) => (
+                  <div 
+                    key={tab}
+                    className={`tab hover-lift ${activeTab === tab ? 'active' : ''}`}
+                    onClick={() => setActiveTab(tab)}
+                  >
+                    {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                  </div>
+                ))}
               </div>
 
-              <div className="tab-content">
+              <div className="tab-content animate-fadeIn">
                 {activeTab === 'description' && (
                   <div>
                     <p>Origin: {product.details.origin}</p>
@@ -159,14 +151,14 @@ const ProductPage = () => {
                   </div>
                 )}
                 {activeTab === 'ingredients' && (
-                  <ul>
+                  <ul className="stagger-children">
                     {product.ingredients.map((ingredient, index) => (
                       <li key={index}>{ingredient}</li>
                     ))}
                   </ul>
                 )}
                 {activeTab === 'brewing' && (
-                  <div>
+                  <div className="stagger-children">
                     <p>Steep Time: {product.details.steepTime}</p>
                     <p>Water Temperature: {product.details.temperature}</p>
                   </div>
@@ -177,32 +169,29 @@ const ProductPage = () => {
         </div>
 
         {/* Reviews Section */}
-        <div className="reviews-section">
+        <div className="reviews-section animate-slideInUp">
           <h2 className="section-title">Customer Reviews</h2>
-          {product.reviews.map((review) => (
-            <div key={review.id} className="review">
-              <div className="review-header">
-                <span className="review-author">{review.author}</span>
-                <span className="review-date">{review.date}</span>
+          <div className="stagger-children">
+            {product.reviews.map((review) => (
+              <div key={review.id} className="review hover-lift">
+                <div className="review-header">
+                  <span className="review-author">{review.author}</span>
+                  <span className="review-date">{review.date}</span>
+                </div>
+                <div className="review-rating">
+                  {'★'.repeat(review.rating)}{'☆'.repeat(5 - review.rating)}
+                </div>
+                <p>{review.comment}</p>
               </div>
-              <div className="review-rating">
-                {'★'.repeat(review.rating)}{'☆'.repeat(5 - review.rating)}
-              </div>
-              <p>{review.comment}</p>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
         {/* Related Products */}
-        <div className="related-products">
+        <div className="related-products animate-slideInUp">
           <h2 className="section-title">You May Also Like</h2>
-          <div className="related-products-grid">
-            {relatedProducts.map((product) => (
-              <TeaProductCard
-                key={product.id}
-                product={product}
-              />
-            ))}
+          <div className="related-products-grid stagger-children">
+            {/* Add related products here */}
           </div>
         </div>
       </div>
