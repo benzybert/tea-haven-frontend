@@ -1,7 +1,7 @@
 /* Home page styles */
 .hero-section {
   min-height: 80vh;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/public/images/hero-bg.jpg');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/public/images/tea-background.jpg');
   background-size: cover;
   background-position: center;
   display: flex;
