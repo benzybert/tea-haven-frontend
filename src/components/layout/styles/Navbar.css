@@ -6,6 +6,14 @@
   position: sticky;
   top: 0;
   z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.navbar-scrolled {
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 0.75rem 0;
 }
 
 .navbar-container {
@@ -22,6 +30,7 @@
   font-weight: 700;
   color: var(--primary-color);
   text-decoration: none;
+  transition: transform 0.2s ease;
 }
 
 .navbar-links {
@@ -34,10 +43,29 @@
   color: var(--text-color);
   text-decoration: none;
   font-weight: 500;
+  padding: 0.5rem 0;
+  position: relative;
   transition: color 0.2s ease;
 }
 
-.navbar-link:hover {
+.navbar-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--primary-color);
+  transition: width 0.2s ease;
+}
+
+.navbar-link:hover::after,
+.navbar-link.active::after {
+  width: 100%;
+}
+
+.navbar-link:hover,
+.navbar-link.active {
   color: var(--primary-color);
 }
 
@@ -56,4 +84,76 @@
   padding: 0.25rem 0.5rem;
   font-size: 0.75rem;
   font-weight: 600;
+  min-width: 1.5rem;
+  text-align: center;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .navbar-links {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: var(--white);
+    padding: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .navbar-links.open {
+    display: flex;
+  }
+
+  .mobile-menu-button {
+    display: block;
+  }
+}
+
+/* Menu Button Animation */
+.mobile-menu-button {
+  display: none;
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.menu-icon {
+  position: relative;
+  width: 24px;
+  height: 2px;
+  background-color: var(--text-color);
+  transition: all 0.3s ease;
+}
+
+.menu-icon::before,
+.menu-icon::after {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 2px;
+  background-color: var(--text-color);
+  transition: all 0.3s ease;
+}
+
+.menu-icon::before {
+  transform: translateY(-6px);
+}
+
+.menu-icon::after {
+  transform: translateY(6px);
+}
+
+.mobile-menu-button.open .menu-icon {
+  background-color: transparent;
+}
+
+.mobile-menu-button.open .menu-icon::before {
+  transform: rotate(45deg);
+}
+
+.mobile-menu-button.open .menu-icon::after {
+  transform: rotate(-45deg);
 }
