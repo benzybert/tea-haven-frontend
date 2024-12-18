@@ -1,0 +1,22 @@
+/* Products page styles */
+.products-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.products-title {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  margin: 2rem 0;
+  color: var(--text-color);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .products-title {
+    font-size: 1.75rem;
+    margin: 1.5rem 0;
+  }
+}
