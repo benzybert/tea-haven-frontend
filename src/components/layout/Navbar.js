@@ -1,20 +1,27 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import './styles/Navbar.css';
 
 const Navbar = () => {
+  const cartItemCount = 2; // This would come from your cart state
+
   return (
-    <nav className="bg-green-600 text-white p-4 shadow-lg">
-      <div className="container mx-auto flex justify-between items-center">
-        <Link to="/" className="text-2xl font-bold flex items-center">
-          <span className="text-3xl mr-2">🍵</span>
+    <nav className="navbar">
+      <div className="navbar-container">
+        <Link to="/" className="navbar-logo">
           TeaHaven
         </Link>
-        <div className="hidden md:flex space-x-6">
-          <Link to="/" className="hover:text-green-200 transition">Home</Link>
-          <Link to="/products" className="hover:text-green-200 transition">Shop</Link>
-          <Link to="/about" className="hover:text-green-200 transition">About</Link>
-          <Link to="/cart" className="hover:text-green-200 transition">Cart (0)</Link>
-          <Link to="/login" className="bg-green-700 px-4 py-2 rounded-lg hover:bg-green-800 transition">Login</Link>
+        
+        <div className="navbar-links">
+          <Link to="/" className="navbar-link">Home</Link>
+          <Link to="/products" className="navbar-link">Products</Link>
+          <Link to="/about" className="navbar-link">About</Link>
+          <Link to="/cart" className="navbar-link cart-icon">
+            Cart
+            {cartItemCount > 0 && (
+              <span className="cart-count">{cartItemCount}</span>
+            )}
+          </Link>
         </div>
       </div>
     </nav>
