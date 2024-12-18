@@ -1,0 +1,136 @@
+/* Cart Page Styles */
+.cart-page {
+  padding: var(--spacing-8) 0;
+}
+
+.cart-empty {
+  text-align: center;
+  padding: var(--spacing-16);
+}
+
+.cart-empty-message {
+  color: var(--text-light);
+  margin-bottom: var(--spacing-8);
+}
+
+/* Cart Items */
+.cart-items {
+  margin-bottom: var(--spacing-8);
+}
+
+.cart-item {
+  display: grid;
+  grid-template-columns: 100px 2fr 1fr 1fr auto;
+  gap: var(--spacing-4);
+  align-items: center;
+  padding: var(--spacing-4);
+  border-bottom: 1px solid var(--gray-200);
+}
+
+@media (max-width: 768px) {
+  .cart-item {
+    grid-template-columns: 80px 1fr;
+    gap: var(--spacing-4);
+    padding: var(--spacing-4) 0;
+  }
+
+  .cart-item-details {
+    grid-column: 2;
+  }
+
+  .cart-item-quantity,
+  .cart-item-price,
+  .cart-item-remove {
+    grid-column: 2;
+  }
+}
+
+.cart-item-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+}
+
+.cart-item-details h3 {
+  margin-bottom: var(--spacing-2);
+  color: var(--text-color);
+}
+
+.cart-item-price {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.cart-quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.quantity-btn {
+  background: var(--gray-100);
+  border: none;
+  padding: var(--spacing-2);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.quantity-btn:hover {
+  background: var(--gray-200);
+}
+
+.remove-btn {
+  background: none;
+  border: none;
+  color: var(--red-600);
+  cursor: pointer;
+  padding: var(--spacing-2);
+  transition: opacity 0.2s ease;
+}
+
+.remove-btn:hover {
+  opacity: 0.8;
+}
+
+/* Cart Summary */
+.cart-summary {
+  background: var(--white);
+  padding: var(--spacing-6);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-4);
+}
+
+.summary-total {
+  font-size: var(--text-xl);
+  font-weight: 600;
+  padding-top: var(--spacing-4);
+  border-top: 1px solid var(--gray-200);
+}
+
+.checkout-btn {
+  width: 100%;
+  margin-top: var(--spacing-4);
+  padding: var(--spacing-4);
+  font-size: var(--text-lg);
+}
+
+/* Continue Shopping */
+.continue-shopping {
+  display: inline-block;
+  margin-top: var(--spacing-8);
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.continue-shopping:hover {
+  color: var(--primary-dark);
+}
