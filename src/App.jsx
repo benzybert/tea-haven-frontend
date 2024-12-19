@@ -24,15 +24,17 @@ function App() {
           <main className="flex-grow">
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="login" element={<LoginForm />} />
-              <Route path="register" element={<RegisterForm />} />
-              <Route path="forgot-password" element={<ForgotPasswordForm />} />
-              <Route path="reset-password/:token" element={<ResetPasswordForm />} />
+              <Route path="/login" element={<LoginForm />} />
+              <Route path="/register" element={<RegisterForm />} />
+              <Route path="/forgot-password" element={<ForgotPasswordForm />} />
+              <Route path="/reset-password/:token" element={<ResetPasswordForm />} />
               <Route path="/profile" element={
                 <ProtectedRoute>
                   <Profile />
                 </ProtectedRoute>
               } />
+              {/* Add a catch-all route for 404 */}
+              <Route path="*" element={<div>404 Not Found</div>} />
             </Routes>
           </main>
           <Footer />
