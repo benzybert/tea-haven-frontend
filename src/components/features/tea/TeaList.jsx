@@ -17,7 +17,7 @@ const TeaList = () => {
   useEffect(() => {
     const fetchTeas = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/teas/search');
+        const response = await axios.get('http://localhost:5001/api/teas/search');
         setTeas(response.data.products);
         setLoading(false);
       } catch (error) {

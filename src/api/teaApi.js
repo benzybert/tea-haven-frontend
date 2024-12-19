@@ -6,7 +6,7 @@ import axios from 'axios';
     The functions are used in the components to fetch the data from the backend.
 */
 
-const BASE_URL = 'http://localhost:5000/api/teas';
+const BASE_URL = 'http://localhost:5001/api/teas';
 
 export const fetchAllTeas = async () => {
     const response = await axios.get(`${BASE_URL}/search`);

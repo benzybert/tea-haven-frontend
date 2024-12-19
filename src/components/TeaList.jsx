@@ -8,18 +8,18 @@ const TeaList = () => {
   const [error, setError] = useState(null);
   const { addToCart } = useCart();
 
-  useEffect(() => {
-    const fetchTeas = async () => {
-      try {
-        const response = await api.get('/teas');
-        setTeas(response.data);
-        setLoading(false);
-      } catch (err) {
-        setError('Error fetching teas. Please try again later.');
-        setLoading(false);
-      }
-    };
+  const fetchTeas = async () => {
+    try {
+      const response = await api.get('/teas');
+      setTeas(response.data);
+      setLoading(false);
+    } catch (err) {
+      setError('Error fetching teas. Please try again later.');
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchTeas();
   }, []);
 
