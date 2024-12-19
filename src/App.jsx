@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './app/store';
 
@@ -8,7 +8,6 @@ import RegisterForm from './components/auth/RegisterForm';
 import ForgotPasswordForm from './components/auth/ForgotPasswordForm';
 import ResetPasswordForm from './components/auth/ResetPasswordForm';
 import ProtectedRoute from './components/routing/ProtectedRoute';
-import TestPage from './components/auth/TestPage';
 
 // Layout Components
 import Header from './components/layout/Header';
@@ -19,28 +18,26 @@ import Profile from './components/Profile';
 function App() {
   return (
     <Provider store={store}>
-      <Router>
+      <BrowserRouter>
         <div className="min-h-screen flex flex-col">
           <Header />
           <main className="flex-grow">
             <Routes>
-              {/* Public Routes */}
               <Route path="/" element={<Home />} />
-              <Route path="/login" element={<LoginForm />} />
-              <Route path="/register" element={<RegisterForm />} />
-              <Route path="/forgot-password" element={<ForgotPasswordForm />} />
-              <Route path="/reset-password/:token" element={<ResetPasswordForm />} />
-              <Route path="/test" element={<TestPage />} />
-
-              {/* Protected Routes */}
-              <Route element={<ProtectedRoute />}>
-                <Route path="/profile" element={<Profile />} />
-              </Route>
+              <Route path="login" element={<LoginForm />} />
+              <Route path="register" element={<RegisterForm />} />
+              <Route path="forgot-password" element={<ForgotPasswordForm />} />
+              <Route path="reset-password/:token" element={<ResetPasswordForm />} />
+              <Route path="/profile" element={
+                <ProtectedRoute>
+                  <Profile />
+                </ProtectedRoute>
+              } />
             </Routes>
           </main>
           <Footer />
         </div>
-      </Router>
+      </BrowserRouter>
     </Provider>
   );
 }
