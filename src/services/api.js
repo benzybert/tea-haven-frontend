@@ -4,12 +4,15 @@ const api = axios.create({
   baseURL: 'http://localhost:5001/api',
   headers: {
     'Content-Type': 'application/json'
-  }
+  },
+  // Add timeout
+  timeout: 5000
 });
 
-// Add a request interceptor to add auth token
+// Add a request interceptor
 api.interceptors.request.use(
   config => {
+    console.log('Making request to:', config.url);
     const token = localStorage.getItem('token');
     if (token) {
       config.headers['x-auth-token'] = token;
@@ -17,14 +20,25 @@ api.interceptors.request.use(
     return config;
   },
   error => {
+    console.error('Request error:', error);
     return Promise.reject(error);
   }
 );
 
-// Add a response interceptor to handle errors
+// Add a response interceptor
 api.interceptors.response.use(
-  response => response,
+  response => {
+    console.log('Received response from:', response.config.url);
+    return response;
+  },
   error => {
+    console.error('Response error:', {
+      url: error.config?.url,
+      status: error.response?.status,
+      message: error.message,
+      response: error.response?.data
+    });
+
     if (error.response?.status === 401) {
       localStorage.removeItem('token');
       window.location.href = '/login';
