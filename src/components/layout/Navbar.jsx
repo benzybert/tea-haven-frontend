@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useCart } from '../../context/CartContext';
@@ -9,13 +9,16 @@ const Navbar = () => {
     return state.auth;
   });
   
+  useEffect(() => {
+    console.log('Auth State in Navbar:', auth);
+    console.log('User value:', auth?.user);
+    console.log('Should show auth buttons?', !auth?.user);
+  }, [auth]);
+
   const { cart } = useCart();
   const cartItemCount = cart.reduce((total, item) => total + item.quantity, 0);
-  
-  console.log('Auth State:', auth); // Debug log
-  console.log('Is user null?', auth?.user === null); // Debug log
 
-  // Always show both buttons unless explicitly logged in
+  // Ensure auth buttons are shown when user is null or undefined
   const showAuthButtons = !auth?.user;
 
   return (
@@ -48,7 +51,7 @@ const Navbar = () => {
             </div>
           </div>
 
-          <div className="flex items-center">
+          <div className="flex items-center space-x-4">
             <Link
               to="/cart"
               className="p-2 text-gray-900 hover:text-green-600 relative"
@@ -74,7 +77,12 @@ const Navbar = () => {
               )}
             </Link>
 
+            {/* Debug comment */}
+            {console.log('Rendering auth buttons:', showAuthButtons)}
+
+            {/* Always render one of these two options */}
             {showAuthButtons ? (
+              /* Render auth buttons */
               <div className="flex items-center space-x-4">
                 <Link
                   to="/login"
@@ -90,9 +98,10 @@ const Navbar = () => {
                 </Link>
               </div>
             ) : (
+              /* Render profile link */
               <Link
                 to="/profile"
-                className="ml-4 px-4 py-2 text-gray-900 hover:text-green-600"
+                className="px-4 py-2 text-gray-900 hover:text-green-600"
               >
                 Profile
               </Link>
