@@ -1,8 +1,1 @@
-import { configureStore } from '@reduxjs/toolkit';
-import authReducer from '../features/auth/authSlice';
-
-export const store = configureStore({
-  reducer: {
-    auth: authReducer,
-  },
-});
+// This file has been removed as part of simplifying state management
