@@ -4,7 +4,6 @@ import { useAuth } from '../../context/AuthContext';
 import { useCart } from '../../context/CartContext';
 
 const Navbar = () => {
-  // Get auth state from AuthContext
   const { user, isLoading, isAuthenticated } = useAuth();
   const { cart } = useCart();
 
