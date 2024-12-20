@@ -4,7 +4,8 @@ import { useSelector } from 'react-redux';
 import { useCart } from '../../context/CartContext';
 
 const Navbar = () => {
-  const { user } = useSelector((state) => state.auth);
+  const auth = useSelector((state) => state.auth);
+  console.log('Auth state in Navbar:', auth); // Debug log
   const { cart } = useCart();
 
   const cartItemCount = cart.reduce((total, item) => total + item.quantity, 0);
@@ -65,14 +66,10 @@ const Navbar = () => {
               )}
             </Link>
 
-            {user ? (
-              <Link
-                to="/profile"
-                className="ml-4 px-4 py-2 text-gray-900 hover:text-green-600"
-              >
-                Profile
-              </Link>
-            ) : (
+            {/* Debug render */}
+            {console.log('Is user authenticated?', Boolean(auth?.user))}
+            
+            {!auth?.user ? (
               <div className="flex items-center space-x-4">
                 <Link
                   to="/login"
@@ -87,6 +84,13 @@ const Navbar = () => {
                   Register
                 </Link>
               </div>
+            ) : (
+              <Link
+                to="/profile"
+                className="ml-4 px-4 py-2 text-gray-900 hover:text-green-600"
+              >
+                Profile
+              </Link>
             )}
           </div>
         </div>
