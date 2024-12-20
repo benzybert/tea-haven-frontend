@@ -5,16 +5,12 @@ const TeaList = () => {
   const [teas, setTeas] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [filter, setFilter] = useState('all'); // 'all', 'green', 'black', 'herbal'
+  const [filter, setFilter] = useState('all');
 
   useEffect(() => {
     const fetchTeas = async () => {
       try {
         const response = await axios.get('http://localhost:5001/api/teas/search', {
-          headers: {
-            'Access-Control-Allow-Origin': '*',
-            'Content-Type': 'application/json',
-          },
           withCredentials: false
         });
         console.log('Tea data received:', response.data);
