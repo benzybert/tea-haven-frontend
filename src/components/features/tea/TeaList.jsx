@@ -18,7 +18,12 @@ const TeaList = () => {
     const fetchTeas = async () => {
       try {
         const response = await axios.get('http://localhost:5001/api/teas/search');
-        setTeas(response.data.products);
+        // Ensure each tea has a unique identifier
+        const teasWithIds = response.data.products.map((tea, index) => ({
+          ...tea,
+          uniqueId: tea.id || `tea-${index}` // Fallback to index-based ID if no ID exists
+        }));
+        setTeas(teasWithIds);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching teas:', error);
@@ -48,9 +53,9 @@ const TeaList = () => {
       <div className="container mx-auto px-4">
         {/* Filter Section */}
         <div className="mb-8 flex justify-center space-x-4">
-          {['all', 'green', 'black', 'herbal'].map(type => (
+          {['all', 'green', 'black', 'herbal'].map((type, index) => (
             <button
-              key={type}
+              key={`filter-${type}-${index}`} // More specific key
               onClick={() => setFilter(type)}
               className={`px-6 py-2 rounded-full transition-all ${
                 filter === type 
@@ -65,9 +70,9 @@ const TeaList = () => {
 
         {/* Tea Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-          {filteredTeas.map(tea => (
+          {filteredTeas.map((tea, index) => (
             <div 
-              key={tea.id} 
+              key={tea.uniqueId} // Use our guaranteed unique ID
               className="bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden group"
             >
               <div className="relative aspect-w-4 aspect-h-3">
