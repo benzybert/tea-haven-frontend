@@ -1,12 +1,11 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { useCart } from '../../context/CartContext';
 
 const Navbar = () => {
-  const { user } = useAuth();
+  const { user } = useSelector((state) => state.auth);
   const { cart } = useCart();
-  const navigate = useNavigate();
 
   const cartItemCount = cart.reduce((total, item) => total + item.quantity, 0);
 
