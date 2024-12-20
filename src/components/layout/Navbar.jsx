@@ -74,12 +74,20 @@ const Navbar = () => {
                 Profile
               </Link>
             ) : (
-              <Link
-                to="/login"
-                className="ml-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
-              >
-                Login
-              </Link>
+              <div className="flex items-center space-x-4">
+                <Link
+                  to="/login"
+                  className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/register"
+                  className="px-4 py-2 border border-green-600 text-green-600 rounded hover:bg-green-50 transition-colors"
+                >
+                  Register
+                </Link>
+              </div>
             )}
           </div>
         </div>
