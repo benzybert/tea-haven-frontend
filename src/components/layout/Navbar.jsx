@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useAuth } from '../../context/AuthContext';
 import { useCart } from '../../context/CartContext';
 
 const Navbar = () => {
-  // Get auth state from Redux
-  const { user, isLoading } = useSelector((state) => state.auth);
+  // Get auth state from AuthContext
+  const { user, isLoading, isAuthenticated } = useAuth();
   const { cart } = useCart();
 
   const cartItemCount = cart.reduce((total, item) => total + item.quantity, 0);
@@ -72,7 +72,7 @@ const Navbar = () => {
             {/* Authentication Buttons */}
             {isLoading ? (
               <div className="animate-pulse bg-gray-200 h-10 w-20 rounded"></div>
-            ) : user ? (
+            ) : isAuthenticated ? (
               <Link
                 to="/profile"
                 className="ml-4 px-4 py-2 text-gray-900 hover:text-green-600"
