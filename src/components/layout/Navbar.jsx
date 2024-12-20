@@ -4,11 +4,19 @@ import { useSelector } from 'react-redux';
 import { useCart } from '../../context/CartContext';
 
 const Navbar = () => {
-  const auth = useSelector((state) => state.auth);
-  console.log('Auth state in Navbar:', auth); // Debug log
+  const auth = useSelector((state) => {
+    console.log('Full Redux State:', state);
+    return state.auth;
+  });
+  
   const { cart } = useCart();
-
   const cartItemCount = cart.reduce((total, item) => total + item.quantity, 0);
+  
+  console.log('Auth State:', auth); // Debug log
+  console.log('Is user null?', auth?.user === null); // Debug log
+
+  // Always show both buttons unless explicitly logged in
+  const showAuthButtons = !auth?.user;
 
   return (
     <nav className="bg-white shadow-lg">
@@ -66,10 +74,7 @@ const Navbar = () => {
               )}
             </Link>
 
-            {/* Debug render */}
-            {console.log('Is user authenticated?', Boolean(auth?.user))}
-            
-            {!auth?.user ? (
+            {showAuthButtons ? (
               <div className="flex items-center space-x-4">
                 <Link
                   to="/login"
