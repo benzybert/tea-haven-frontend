@@ -1,0 +1,1 @@
+// Placeholder for a Checkout page component
