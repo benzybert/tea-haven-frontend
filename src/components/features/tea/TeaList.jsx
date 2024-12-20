@@ -1,13 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-/*
-    This component displays a list of teas. The teas are fetched from the backend
-    using an API call. The teas are displayed in a grid format with an image, title,
-    description, price, and type. The user can filter the teas by type using the buttons
-    at the top of the page.
-*/
-
 const TeaList = () => {
   const [teas, setTeas] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -17,13 +10,15 @@ const TeaList = () => {
   useEffect(() => {
     const fetchTeas = async () => {
       try {
-        const response = await axios.get('http://localhost:5001/api/teas/search');
-        // Ensure each tea has a unique identifier
-        const teasWithIds = response.data.products.map((tea, index) => ({
-          ...tea,
-          uniqueId: tea.id || `tea-${index}` // Fallback to index-based ID if no ID exists
-        }));
-        setTeas(teasWithIds);
+        const response = await axios.get('http://localhost:5001/api/teas/search', {
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'application/json',
+          },
+          withCredentials: false
+        });
+        console.log('Tea data received:', response.data);
+        setTeas(response.data.products);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching teas:', error);
@@ -36,7 +31,7 @@ const TeaList = () => {
 
   const filteredTeas = filter === 'all' 
     ? teas 
-    : teas.filter(tea => tea.type?.toLowerCase() === filter);
+    : teas.filter(tea => tea.category?.toLowerCase() === filter);
 
   if (loading) return (
     <div className="flex justify-center items-center min-h-screen">
@@ -53,9 +48,9 @@ const TeaList = () => {
       <div className="container mx-auto px-4">
         {/* Filter Section */}
         <div className="mb-8 flex justify-center space-x-4">
-          {['all', 'green', 'black', 'herbal'].map((type, index) => (
+          {['all', 'green', 'black', 'herbal', 'oolong'].map(type => (
             <button
-              key={`filter-${type}-${index}`} // More specific key
+              key={type}
               onClick={() => setFilter(type)}
               className={`px-6 py-2 rounded-full transition-all ${
                 filter === type 
@@ -70,15 +65,15 @@ const TeaList = () => {
 
         {/* Tea Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-          {filteredTeas.map((tea, index) => (
+          {filteredTeas.map(tea => (
             <div 
-              key={tea.uniqueId} // Use our guaranteed unique ID
+              key={tea._id} 
               className="bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden group"
             >
               <div className="relative aspect-w-4 aspect-h-3">
                 <img 
                   src={tea.image} 
-                  alt={tea.title} 
+                  alt={tea.name} 
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   onError={(e) => {
                     e.target.src = '/images/tea-placeholder.jpg';
@@ -92,13 +87,13 @@ const TeaList = () => {
               
               <div className="p-6">
                 <div className="mb-4">
-                  <h2 className="text-xl font-bold mb-2 text-gray-800">{tea.title}</h2>
-                  <p className="text-gray-600 text-sm line-clamp-2">{tea.description || 'Delicious premium tea'}</p>
+                  <h2 className="text-xl font-bold mb-2 text-gray-800">{tea.name}</h2>
+                  <p className="text-gray-600 text-sm line-clamp-2">{tea.description}</p>
                 </div>
                 
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-green-600 font-medium">
-                    {tea.type || 'Classic Blend'}
+                    {tea.category}
                   </span>
                   <button 
                     className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 
