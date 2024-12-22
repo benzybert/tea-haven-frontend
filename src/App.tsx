@@ -1,20 +1,9 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext';
-import { CartProvider } from './context/CartContext';
-
-// Auth Components
-import LoginForm from './components/auth/LoginForm';
-import RegisterForm from './components/auth/RegisterForm';
-import ForgotPasswordForm from './components/auth/ForgotPasswordForm';
-import ResetPasswordForm from './components/auth/ResetPasswordForm';
-import ProtectedRoute from './components/routing/ProtectedRoute';
-
-// Layout Components
-import Header from './components/layout/Header';
-import Footer from './components/layout/Footer';
-import Home from './components/Home';
-import Profile from './components/Profile';
+import { BrowserRouter } from 'react-router-dom';
+import { AuthProvider } from './store/auth/AuthContext';
+import { CartProvider } from './store/cart/CartContext';
+import { Header, Footer } from './app/layout';
+import AppRoutes from './app/routes';
 
 const App: React.FC = () => {
   return (
@@ -24,20 +13,7 @@ const App: React.FC = () => {
           <div className="min-h-screen flex flex-col">
             <Header />
             <main className="flex-grow">
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/login" element={<LoginForm />} />
-                <Route path="/register" element={<RegisterForm />} />
-                <Route path="/forgot-password" element={<ForgotPasswordForm />} />
-                <Route path="/reset-password/:token" element={<ResetPasswordForm />} />
-                <Route path="/profile" element={
-                  <ProtectedRoute>
-                    <Profile />
-                  </ProtectedRoute>
-                } />
-                {/* Add a catch-all route for 404 */}
-                <Route path="*" element={<div>404 Not Found</div>} />
-              </Routes>
+              <AppRoutes />
             </main>
             <Footer />
           </div>
