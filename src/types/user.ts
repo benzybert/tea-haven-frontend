@@ -1,13 +1,20 @@
 export interface User {
-  id: string;
-  name: string;
+  _id: string;
   email: string;
-  // Add other user properties as needed
+  first_name: string;
+  last_name: string;
+  created_at: string;
+  last_login?: string;
+  role: string;
 }
 
-export interface AuthState {
-  isAuthenticated: boolean;
+export interface UserState {
   user: User | null;
   loading: boolean;
   error: string | null;
+}
+
+export interface UserProfile extends User {
+  orders: any[];
+  reviews: any[];
 }
