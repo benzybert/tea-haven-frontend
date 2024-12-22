@@ -1,34 +1,50 @@
-<<<<<<< HEAD
-=======
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
-    <footer className="bg-white shadow-lg">
-      <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center">
-          <p className="text-gray-500 text-sm">
-            &copy; {new Date().getFullYear()} Tea Haven. All rights reserved.
-          </p>
-          <nav>
-            <ul className="flex space-x-4">
+    <footer className="bg-gray-800 text-white">
+      <div className="container mx-auto px-4 py-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Tea Haven</h3>
+            <p className="text-gray-300">
+              Discover the finest tea selections from around the world.
+            </p>
+          </div>
+          
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
+            <ul className="space-y-2">
               <li>
-                <a href="/" className="text-gray-500 hover:text-green-600">
+                <Link to="/" className="text-gray-300 hover:text-white">
                   Home
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/products" className="text-gray-500 hover:text-green-600">
+                <Link to="/products" className="text-gray-300 hover:text-white">
                   Products
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/about" className="text-gray-500 hover:text-green-600">
+                <Link to="/about" className="text-gray-300 hover:text-white">
                   About
-                </a>
+                </Link>
               </li>
             </ul>
-          </nav>
+          </div>
+          
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Contact</h3>
+            <p className="text-gray-300">
+              Email: support@teahaven.com<br />
+              Phone: (555) 123-4567
+            </p>
+          </div>
+        </div>
+        
+        <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-300">
+          <p>&copy; {new Date().getFullYear()} Tea Haven. All rights reserved.</p>
         </div>
       </div>
     </footer>
@@ -36,4 +52,3 @@ const Footer = () => {
 };
 
 export default Footer;
->>>>>>> 6b64c5f (Reorganize the frontend codebase)
