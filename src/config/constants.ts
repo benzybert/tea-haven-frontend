@@ -1,38 +1,22 @@
-export const APP_NAME = 'Tea Haven';
+export const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
 export const STORAGE_KEYS = {
-  AUTH_TOKEN: 'auth_token',
-  CART: 'cart_items',
-} as const;
+  TOKEN: 'tea_haven_token',
+  USER: 'tea_haven_user',
+  CART: 'tea_haven_cart'
+};
 
-export const ROUTES = {
-  HOME: '/',
+export const AUTH_ROUTES = {
   LOGIN: '/login',
   REGISTER: '/register',
-  PROFILE: '/profile',
-  PRODUCTS: '/products',
-  CART: '/cart',
   FORGOT_PASSWORD: '/forgot-password',
   RESET_PASSWORD: '/reset-password',
-} as const;
+  PROFILE: '/profile'
+};
 
-export const API_ENDPOINTS = {
-  AUTH: {
-    LOGIN: '/auth/login',
-    REGISTER: '/auth/register',
-    VERIFY: '/auth/me',
-    FORGOT_PASSWORD: '/auth/forgot-password',
-    RESET_PASSWORD: '/auth/reset-password',
-  },
-  PRODUCTS: {
-    LIST: '/products',
-    DETAIL: (id: string) => `/products/${id}`,
-    CATEGORIES: '/products/categories',
-  },
-  CART: {
-    ADD: '/cart/add',
-    REMOVE: (id: string) => `/cart/remove/${id}`,
-    UPDATE: '/cart/update',
-    CLEAR: '/cart/clear',
-  },
-} as const;
+export const PRODUCT_ROUTES = {
+  LIST: '/products',
+  DETAIL: '/products/:id',
+  CART: '/cart',
+  CHECKOUT: '/checkout'
+};
