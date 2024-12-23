@@ -1,19 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { User, LoginData, RegisterData, ForgotPasswordData, ResetPasswordData } from '../types';
+import { User, AuthContextType, LoginCredentials, RegisterData, ForgotPasswordData, ResetPasswordData } from '../types';
 import { authApi } from '../services/api/endpoints/auth';
 import { STORAGE_KEYS } from '../config/constants';
-
-interface AuthContextType {
-  user: User | null;
-  isAuthenticated: boolean;
-  isLoading: boolean;
-  error: string | null;
-  login: (data: LoginData) => Promise<void>;
-  register: (data: RegisterData) => Promise<void>;
-  logout: () => void;
-  forgotPassword: (data: ForgotPasswordData) => Promise<void>;
-  resetPassword: (data: ResetPasswordData) => Promise<void>;
-}
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
@@ -30,15 +18,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setIsLoading(false);
   }, []);
 
-  const login = async (data: LoginData) => {
+  const login = async (credentials: LoginCredentials): Promise<void> => {
     try {
       setIsLoading(true);
       setError(null);
-      const response = await authApi.login(data);
-      setUser(response.user);
-      localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(response.user));
-      if (data.rememberMe) {
-        localStorage.setItem(STORAGE_KEYS.TOKEN, response.token);
+      const { data } = await authApi.login(credentials);
+      setUser(data.user);
+      localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(data.user));
+      if (credentials.rememberMe) {
+        localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, data.token);
+      } else {
+        sessionStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, data.token);
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred during login');
@@ -48,14 +38,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const register = async (data: RegisterData) => {
+  const register = async (data: RegisterData): Promise<void> => {
     try {
       setIsLoading(true);
       setError(null);
       const response = await authApi.register(data);
-      setUser(response.user);
-      localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(response.user));
-      localStorage.setItem(STORAGE_KEYS.TOKEN, response.token);
+      setUser(response.data.user);
+      localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(response.data.user));
+      localStorage.setItem(STORAGE_KEYS.AUTH_TOKEN, response.data.token);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred during registration');
       throw err;
@@ -67,10 +57,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const logout = () => {
     setUser(null);
     localStorage.removeItem(STORAGE_KEYS.USER);
-    localStorage.removeItem(STORAGE_KEYS.TOKEN);
+    localStorage.removeItem(STORAGE_KEYS.AUTH_TOKEN);
+    sessionStorage.removeItem(STORAGE_KEYS.AUTH_TOKEN);
   };
 
-  const forgotPassword = async (data: ForgotPasswordData) => {
+  const forgotPassword = async (data: ForgotPasswordData): Promise<void> => {
     try {
       setIsLoading(true);
       setError(null);
@@ -83,7 +74,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const resetPassword = async (data: ResetPasswordData) => {
+  const resetPassword = async (data: ResetPasswordData): Promise<void> => {
     try {
       setIsLoading(true);
       setError(null);
@@ -115,7 +106,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   );
 };
 
-export const useAuth = () => {
+export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
   if (!context) {
     throw new Error('useAuth must be used within an AuthProvider');
