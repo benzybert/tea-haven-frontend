@@ -1,23 +1,23 @@
 import api from './api';
 
-const BASE_URL = '/teas';
+const TEA_API = '/teas';
 
 export const teaService = {
-    getAllTeas: () => 
-        api.get(`${BASE_URL}/search`),
+  getAllTeas: () => 
+    api.get(`${TEA_API}/search`),
 
-    getTeaById: (id) => 
-        api.get(`${BASE_URL}/${id}`),
+  getTeaById: (id) => 
+    api.get(`${TEA_API}/${id}`),
 
-    getTeasByType: (type) => 
-        api.get(`${BASE_URL}/type/${type}`),
+  getTeasByType: (type) => 
+    api.get(`${TEA_API}/type/${type}`),
 
-    getTeaCategories: () => 
-        api.get(`${BASE_URL}/categories`),
-        
-    searchTeas: (query) =>
-        api.get(`${BASE_URL}/search`, { params: { query } }),
+  getTeaCategories: () => 
+    api.get(`${TEA_API}/categories`),
 
-    getFeaturedTeas: () =>
-        api.get(`${BASE_URL}/featured`)
+  searchTeas: (query) =>
+    api.get(`${TEA_API}/search`, { params: { query } }),
+
+  getFeaturedTeas: () =>
+    api.get(`${TEA_API}/featured`)
 };

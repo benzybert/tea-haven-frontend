@@ -1,27 +1,26 @@
-import axios from 'axios';
-import { API_URL } from '../config/constants';
+import api from './api';
 
-const AUTH_API = `${API_URL}/auth`;
+const AUTH_API = '/auth';
 
 export const authService = {
-  login: (credentials) => 
-    axios.post(`${AUTH_API}/login`, credentials),
+  login: (data) => 
+    api.post(`${AUTH_API}/login`, data),
 
-  register: (userData) =>
-    axios.post(`${AUTH_API}/register`, userData),
+  register: (data) =>
+    api.post(`${AUTH_API}/register`, data),
 
-  forgotPassword: (email) =>
-    axios.post(`${AUTH_API}/forgot-password`, { email }),
+  forgotPassword: (data) =>
+    api.post(`${AUTH_API}/forgot-password`, data),
 
-  resetPassword: (resetData) =>
-    axios.post(`${AUTH_API}/reset-password`, resetData),
-
-  verifyToken: () =>
-    axios.get(`${AUTH_API}/verify`),
-
-  refreshToken: () =>
-    axios.post(`${AUTH_API}/refresh-token`),
+  resetPassword: (data) =>
+    api.post(`${AUTH_API}/reset-password`, data),
 
   logout: () =>
-    axios.post(`${AUTH_API}/logout`)
+    api.post(`${AUTH_API}/logout`),
+
+  verifyToken: () =>
+    api.post(`${AUTH_API}/verify-token`),
+
+  refreshToken: () =>
+    api.post(`${AUTH_API}/refresh-token`)
 };
