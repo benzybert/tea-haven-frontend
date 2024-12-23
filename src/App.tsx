@@ -1,21 +1,18 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import { AuthProvider } from './store/auth/AuthContext';
-import AppRoutes from './app/routes';
-import { Header, Footer } from './app/layout';
+import { RouterProvider } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import { CartProvider } from './context/CartContext';
+import { Layout } from './components/layout';
+import router from './routes';
 
 const App: React.FC = () => {
   return (
     <AuthProvider>
-      <BrowserRouter>
-        <div className="min-h-screen flex flex-col bg-gray-50">
-          <Header />
-          <main className="flex-grow container mx-auto px-4 py-8">
-            <AppRoutes />
-          </main>
-          <Footer />
-        </div>
-      </BrowserRouter>
+      <CartProvider>
+        <Layout>
+          <RouterProvider router={router} />
+        </Layout>
+      </CartProvider>
     </AuthProvider>
   );
 };
