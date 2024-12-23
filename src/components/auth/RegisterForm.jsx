@@ -1,48 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
 const RegisterForm = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    passwordConfirm: '',
-  });
-
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
+  const { register, isLoading, error } = useAuth();
   const navigate = useNavigate();
-  const { register, isLoading, error, isAuthenticated } = useAuth();
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate('/');
-    }
-  }, [isAuthenticated, navigate]);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await register(formData);
+      await register({ name, email, password, passwordConfirm });
+      navigate('/');
     } catch (err) {
       console.error(err);
     }
   };
-
-  if (isLoading) {
-    return (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600" />
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -59,69 +35,50 @@ const RegisterForm = () => {
           </p>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+          {error && (
+            <div className="rounded-md bg-red-50 p-4">
+              <div className="text-sm text-red-700">{error}</div>
+            </div>
+          )}
           <div className="rounded-md shadow-sm -space-y-px">
             <div>
-              <label htmlFor="name" className="sr-only">
-                Full Name
-              </label>
               <input
-                id="name"
-                name="name"
                 type="text"
-                autoComplete="name"
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Full Name"
-                value={formData.name}
-                onChange={handleChange}
+                value={name}
+                onChange={(e) => setName(e.target.value)}
               />
             </div>
             <div>
-              <label htmlFor="email" className="sr-only">
-                Email address
-              </label>
               <input
-                id="email"
-                name="email"
                 type="email"
-                autoComplete="email"
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 sm:text-sm"
                 placeholder="Email address"
-                value={formData.email}
-                onChange={handleChange}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div>
-              <label htmlFor="password" className="sr-only">
-                Password
-              </label>
               <input
-                id="password"
-                name="password"
                 type="password"
-                autoComplete="new-password"
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 sm:text-sm"
                 placeholder="Password"
-                value={formData.password}
-                onChange={handleChange}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
             <div>
-              <label htmlFor="passwordConfirm" className="sr-only">
-                Confirm Password
-              </label>
               <input
-                id="passwordConfirm"
-                name="passwordConfirm"
                 type="password"
-                autoComplete="new-password"
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Confirm Password"
-                value={formData.passwordConfirm}
-                onChange={handleChange}
+                value={passwordConfirm}
+                onChange={(e) => setPasswordConfirm(e.target.value)}
               />
             </div>
           </div>
