@@ -1,62 +1,32 @@
 import axios from 'axios';
+import { API_URL, STORAGE_KEYS } from '../config/constants';
 
-const baseURL = process.env.REACT_APP_API_URL;
-
-const api = axios.create({
-  baseURL,
+const axiosInstance = axios.create({
+  baseURL: API_URL,
   headers: {
-    'Content-Type': 'application/json',
-  },
+    'Content-Type': 'application/json'
+  }
 });
 
-// Add a request interceptor
-api.interceptors.request.use(
+axiosInstance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem(STORAGE_KEYS.TOKEN);
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
-// Add a response interceptor
-api.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    const originalRequest = error.config;
-
-    // If the error status is 401 and there is no originalRequest._retry flag,
-    // it means the token has expired and we need to refresh it
-    if (error.response.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-
-      try {
-        const refreshToken = localStorage.getItem('refreshToken');
-        const response = await axios.post(`${baseURL}/api/auth/refresh-token`, {
-          refreshToken,
-        });
-
-        const { token } = response.data;
-        localStorage.setItem('token', token);
-
-        // Retry the original request with the new token
-        originalRequest.headers.Authorization = `Bearer ${token}`;
-        return api(originalRequest);
-      } catch (error) {
-        // If refresh token fails, redirect to login
-        localStorage.removeItem('token');
-        localStorage.removeItem('refreshToken');
-        window.location.href = '/login';
-        return Promise.reject(error);
-      }
-    }
-
-    return Promise.reject(error);
+export const setAuthToken = (token) => {
+  if (token) {
+    localStorage.setItem(STORAGE_KEYS.TOKEN, token);
+    axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  } else {
+    localStorage.removeItem(STORAGE_KEYS.TOKEN);
+    delete axiosInstance.defaults.headers.common['Authorization'];
   }
-);
+};
 
-export default api;
+export default axiosInstance;
