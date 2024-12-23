@@ -12,8 +12,8 @@ import ProtectedRoute from './components/container/routing/ProtectedRoute';
 // Layout Components
 import Header from './components/container/layout/Header';
 import Footer from './components/container/layout/Footer';
-import Home from './components/Home';
-import Profile from './components/Profile';
+import Home from './pages/Home';
+import Profile from './pages/Profile';
 
 function App() {
   return (
