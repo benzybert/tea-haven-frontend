@@ -12,8 +12,6 @@ import {
   RegisterPage,
   ForgotPasswordPage,
   ResetPasswordPage,
-  ProductsPage,
-  ProductDetailsPage,
   CartPage,
   CheckoutPage
 } from './pages';
