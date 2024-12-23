@@ -1,7 +1,7 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { ForgotPasswordFormData } from '../../types/auth';
+import { ForgotPasswordForm } from '../../types/auth';
 
 const ForgotPasswordForm: React.FC = () => {
   const [formData, setFormData] = useState<ForgotPasswordFormData>({
