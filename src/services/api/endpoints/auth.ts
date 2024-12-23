@@ -1,26 +1,27 @@
 import { apiClient } from '../apiClient';
-import { LoginFormData, RegisterFormData, ResetPasswordFormData, User } from '../../../types';
+import { LoginData, RegisterData, ResetPasswordData, User } from '../../../types';
 
 interface AuthResponse {
   user: User;
   token: string;
 }
 
-const BASE_PATH = '/api/auth';
+export const authApi = {
+  login: (data: LoginData) =>
+    apiClient.post<AuthResponse>('/auth/login', data),
 
-export const authService = {
-  login: (data: LoginFormData) =>
-    apiClient.post<AuthResponse>(`${BASE_PATH}/login`, data),
+  register: (data: RegisterData) =>
+    apiClient.post<AuthResponse>('/auth/register', data),
 
-  register: (data: RegisterFormData) =>
-    apiClient.post<AuthResponse>(`${BASE_PATH}/register`, data),
+  forgotPassword: (data: { email: string }) =>
+    apiClient.post<{ message: string }>('/auth/forgot-password', data),
 
-  forgotPassword: (email: string) =>
-    apiClient.post<{ message: string }>(`${BASE_PATH}/forgot-password`, { email }),
+  resetPassword: (data: ResetPasswordData) =>
+    apiClient.post<{ message: string }>('/auth/reset-password', data),
 
-  resetPassword: (data: ResetPasswordFormData) =>
-    apiClient.post<{ message: string }>(`${BASE_PATH}/reset-password`, data),
+  verifyToken: (token: string) =>
+    apiClient.post<{ valid: boolean }>('/auth/verify-token', { token }),
 
-  verifyToken: () =>
-    apiClient.get<{ user: User }>(`${BASE_PATH}/verify`),
+  refreshToken: () =>
+    apiClient.post<{ token: string }>('/auth/refresh-token')
 };

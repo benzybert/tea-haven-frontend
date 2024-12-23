@@ -13,114 +13,81 @@ interface ApiError {
 }
 
 class ApiClient {
-  private client: AxiosInstance;
+  private instance: AxiosInstance;
 
   constructor() {
-    this.client = axios.create({
+    this.instance = axios.create({
       baseURL: API_BASE_URL,
       headers: {
-        'Content-Type': 'application/json',
-      },
+        'Content-Type': 'application/json'
+      }
     });
 
     this.setupInterceptors();
   }
 
-  private setupInterceptors() {
-    // Request interceptor
-    this.client.interceptors.request.use(
+  private setupInterceptors(): void {
+    this.instance.interceptors.request.use(
       (config) => {
-        const token = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN) ||
-                     sessionStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
+        const token = localStorage.getItem(STORAGE_KEYS.TOKEN);
         if (token) {
           config.headers.Authorization = `Bearer ${token}`;
         }
         return config;
       },
-      (error) => {
-        return Promise.reject(error);
-      }
+      (error) => Promise.reject(error)
     );
 
-    // Response interceptor
-    this.client.interceptors.response.use(
+    this.instance.interceptors.response.use(
       (response) => response,
-      (error: AxiosError) => {
-        if (error.response?.status === 401) {
-          localStorage.removeItem(STORAGE_KEYS.AUTH_TOKEN);
-          sessionStorage.removeItem(STORAGE_KEYS.AUTH_TOKEN);
-          window.location.href = '/login';
-        }
-        return Promise.reject(this.handleError(error));
-      }
+      (error) => this.handleError(error)
     );
   }
 
-  private handleError(error: AxiosError): ApiError {
+  private handleError(error: AxiosError): Promise<ApiError> {
     if (error.response) {
-      return {
-        message: error.response.data?.message || 'An error occurred',
+      const data = error.response.data as { message?: string };
+      return Promise.reject({
+        message: data.message || 'An error occurred',
         status: error.response.status
-      };
+      });
     }
-    if (error.request) {
-      return {
-        message: 'No response received from server',
-        status: 503
-      };
-    }
-    return {
-      message: error.message || 'Unknown error occurred',
+    return Promise.reject({
+      message: error.message || 'Network error',
       status: 500
+    });
+  }
+
+  public async get<T>(url: string, params?: object): Promise<ApiResponse<T>> {
+    const response: AxiosResponse = await this.instance.get(url, { params });
+    return {
+      data: response.data,
+      status: response.status
     };
   }
 
-  async get<T>(url: string, params?: object): Promise<ApiResponse<T>> {
-    try {
-      const response: AxiosResponse = await this.client.get(url, { params });
-      return {
-        data: response.data,
-        status: response.status
-      };
-    } catch (error) {
-      throw this.handleError(error as AxiosError);
-    }
+  public async post<T>(url: string, data?: object): Promise<ApiResponse<T>> {
+    const response: AxiosResponse = await this.instance.post(url, data);
+    return {
+      data: response.data,
+      status: response.status
+    };
   }
 
-  async post<T>(url: string, data?: object): Promise<ApiResponse<T>> {
-    try {
-      const response: AxiosResponse = await this.client.post(url, data);
-      return {
-        data: response.data,
-        status: response.status
-      };
-    } catch (error) {
-      throw this.handleError(error as AxiosError);
-    }
+  public async put<T>(url: string, data?: object): Promise<ApiResponse<T>> {
+    const response: AxiosResponse = await this.instance.put(url, data);
+    return {
+      data: response.data,
+      status: response.status
+    };
   }
 
-  async put<T>(url: string, data?: object): Promise<ApiResponse<T>> {
-    try {
-      const response: AxiosResponse = await this.client.put(url, data);
-      return {
-        data: response.data,
-        status: response.status
-      };
-    } catch (error) {
-      throw this.handleError(error as AxiosError);
-    }
-  }
-
-  async delete<T>(url: string): Promise<ApiResponse<T>> {
-    try {
-      const response: AxiosResponse = await this.client.delete(url);
-      return {
-        data: response.data,
-        status: response.status
-      };
-    } catch (error) {
-      throw this.handleError(error as AxiosError);
-    }
+  public async delete<T>(url: string): Promise<ApiResponse<T>> {
+    const response: AxiosResponse = await this.instance.delete(url);
+    return {
+      data: response.data,
+      status: response.status
+    };
   }
 }
 
