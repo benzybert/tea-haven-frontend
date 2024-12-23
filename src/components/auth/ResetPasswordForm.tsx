@@ -7,7 +7,9 @@ const ResetPasswordForm: React.FC = () => {
   const { token } = useParams<{ token: string }>();
   const navigate = useNavigate();
   
-  const [formData, setFormData] = useState<Omit<ResetPasswordData, 'token'>>({{
+  type ResetPasswordFormData = Omit<ResetPasswordData, 'token'>;
+
+  const [formData, setFormData] = useState<ResetPasswordFormData>({
     password: '',
     confirmPassword: ''
   });
@@ -17,7 +19,7 @@ const ResetPasswordForm: React.FC = () => {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
-    setFormData((prevState) => ({
+    setFormData((prevState: ResetPasswordFormData) => ({
       ...prevState,
       [name]: value,
     }));

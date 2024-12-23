@@ -1,13 +1,13 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { LoginData } from '../../types';
+import { LoginCredentials } from '../../types';
 
 const LoginForm: React.FC = () => {
   const navigate = useNavigate();
   const { login, isLoading, error } = useAuth();
 
-  const [formData, setFormData] = useState<LoginData>({
+  const [formData, setFormData] = useState<LoginCredentials>({
     email: '',
     password: '',
     rememberMe: false
@@ -16,12 +16,12 @@ const LoginForm: React.FC = () => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { name, value, type, checked } = e.target;
     if (type === 'checkbox') {
-      setFormData((prevState: LoginData) => ({
+      setFormData((prevState: LoginCredentials) => ({
         ...prevState,
         [name]: checked,
       }));
     } else {
-      setFormData((prevState: LoginData) => ({
+      setFormData((prevState: LoginCredentials) => ({
         ...prevState,
         [name]: value,
       }));
