@@ -3,18 +3,24 @@ import { Routes, Route } from 'react-router-dom';
 
 // Pages
 import HomePage from './pages/HomePage';
-import LoginPage from './pages/auth/LoginPage';
-import RegisterPage from './pages/auth/RegisterPage';
-import ForgotPasswordPage from './pages/auth/ForgotPasswordPage';
-import ResetPasswordPage from './pages/auth/ResetPasswordPage';
+import { 
+  LoginPage,
+  RegisterPage,
+  ForgotPasswordPage,
+  ResetPasswordPage 
+} from './pages/auth';
 import ProfilePage from './pages/ProfilePage';
-import ProductsPage from './pages/products/ProductsPage';
-import ProductDetailsPage from './pages/products/ProductDetailsPage';
-import CartPage from './pages/cart/CartPage';
-import CheckoutPage from './pages/cart/CheckoutPage';
+import {
+  ProductsPage,
+  ProductDetailsPage 
+} from './pages/products';
+import {
+  CartPage,
+  CheckoutPage 
+} from './pages/cart';
 
 // Components
-import ProtectedRoute from './components/auth/ProtectedRoute';
+import { ProtectedRoute } from './components/routing';
 
 const AppRoutes = () => {
   return (
