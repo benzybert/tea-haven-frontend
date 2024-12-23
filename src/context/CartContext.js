@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { cartService } from '../services/cart.service';
+import { STORAGE_KEYS } from '../config/constants';
 
 const CartContext = createContext();
 
@@ -8,23 +9,34 @@ export const CartProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  // Load cart from storage on initial load
+  useEffect(() => {
+    const storedCart = localStorage.getItem(STORAGE_KEYS.CART);
+    if (storedCart) {
+      setCartItems(JSON.parse(storedCart));
+    }
+    fetchCart();
+  }, []);
+
+  // Save cart to storage whenever it changes
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEYS.CART, JSON.stringify(cartItems));
+  }, [cartItems]);
+
   const fetchCart = async () => {
     try {
       setIsLoading(true);
       const response = await cartService.getCart();
-      setCartItems(response.data);
+      setCartItems(response.data.items);
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to fetch cart');
+      console.error('Failed to fetch cart:', err);
     } finally {
       setIsLoading(false);
     }
   };
 
-  useEffect(() => {
-    fetchCart();
-  }, []);
-
-  const addToCart = async (productId, quantity) => {
+  const addToCart = async (productId, quantity = 1) => {
     try {
       setIsLoading(true);
       await cartService.addToCart(productId, quantity);
@@ -38,6 +50,7 @@ export const CartProvider = ({ children }) => {
   };
 
   const updateQuantity = async (productId, quantity) => {
+    if (quantity < 1) return;
     try {
       setIsLoading(true);
       await cartService.updateQuantity(productId, quantity);
@@ -56,7 +69,7 @@ export const CartProvider = ({ children }) => {
       await cartService.removeFromCart(productId);
       await fetchCart();
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to remove item from cart');
+      setError(err.response?.data?.message || 'Failed to remove item');
       throw err;
     } finally {
       setIsLoading(false);
@@ -76,6 +89,10 @@ export const CartProvider = ({ children }) => {
     }
   };
 
+  const getCartTotal = () => {
+    return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -85,7 +102,8 @@ export const CartProvider = ({ children }) => {
         addToCart,
         updateQuantity,
         removeFromCart,
-        clearCart
+        clearCart,
+        getCartTotal
       }}
     >
       {children}
