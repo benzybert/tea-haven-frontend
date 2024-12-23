@@ -1,27 +1,14 @@
-import { User } from './user';
-
-export interface LoginCredentials {
+export interface LoginData {
   email: string;
   password: string;
+  rememberMe?: boolean;
 }
 
 export interface RegisterData {
+  username: string;
   email: string;
   password: string;
-  first_name: string;
-  last_name: string;
-}
-
-export interface AuthState {
-  isAuthenticated: boolean;
-  user: User | null;
-  loading: boolean;
-  error: string | null;
-}
-
-export interface AuthResponse {
-  token: string;
-  user: User;
+  confirmPassword: string;
 }
 
 export interface ForgotPasswordData {
@@ -34,14 +21,9 @@ export interface ResetPasswordData {
   confirmPassword: string;
 }
 
-export type AuthContextType = {
+export interface AuthState {
   user: User | null;
   isAuthenticated: boolean;
   isLoading: boolean;
   error: string | null;
-  login: (credentials: LoginCredentials) => Promise<void>;
-  register: (data: RegisterData) => Promise<void>;
-  logout: () => void;
-  forgotPassword: (email: string) => Promise<void>;
-  resetPassword: (data: ResetPasswordData) => Promise<void>;
-};
+}
