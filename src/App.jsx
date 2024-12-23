@@ -4,14 +4,14 @@ import { CartProvider } from './context/CartContext';
 
 // Auth Components
 import LoginForm from './components/presentational/auth/LoginForm';  // Fix path
-import RegisterForm from './components/auth/RegisterForm';
-import ForgotPasswordForm from './components/auth/ForgotPasswordForm';
-import ResetPasswordForm from './components/auth/ResetPasswordForm';
-import ProtectedRoute from './components/routing/ProtectedRoute';
+import RegisterForm from './components/presentational/auth/RegisterForm';
+import ForgotPasswordForm from './components/presentational/auth/ForgotPasswordForm';
+import ResetPasswordForm from './components/presentational/auth/ResetPasswordForm';
+import ProtectedRoute from './components/container/routing/ProtectedRoute';
 
 // Layout Components
-import Header from './components/layout/Header';
-import Footer from './components/layout/Footer';
+import Header from './components/container/layout/Header';
+import Footer from './components/container/layout/Footer';
 import Home from './components/Home';
 import Profile from './components/Profile';
 
