@@ -1,5 +1,5 @@
 import { apiClient } from '../apiClient';
-import { LoginData, RegisterData, ResetPasswordData, User } from '../../../types';
+import { LoginCredentials, RegisterData, ResetPasswordData, User } from '../../../types';
 
 interface AuthResponse {
   user: User;
@@ -7,8 +7,8 @@ interface AuthResponse {
 }
 
 export const authApi = {
-  login: (data: LoginData) =>
-    apiClient.post<AuthResponse>('/auth/login', data),
+  login: (credentials: LoginCredentials) =>
+    apiClient.post<AuthResponse>('/auth/login', credentials),
 
   register: (data: RegisterData) =>
     apiClient.post<AuthResponse>('/auth/register', data),

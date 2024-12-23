@@ -4,10 +4,10 @@ import { API_ENDPOINTS } from '../config/constants';
 import {
   LoginCredentials,
   RegisterData,
+  User,
   AuthResponse,
   ForgotPasswordData,
-  ResetPasswordData,
-  User
+  ResetPasswordData
 } from '../types';
 
 export const authService = {
@@ -18,11 +18,14 @@ export const authService = {
     axiosInstance.post(API_ENDPOINTS.AUTH.REGISTER, data),
 
   verifyToken: (): Promise<AxiosResponse<User>> =>
-    axiosInstance.get(API_ENDPOINTS.AUTH.VERIFY),
+    axiosInstance.get(API_ENDPOINTS.AUTH.VERIFY_TOKEN),
 
   forgotPassword: (data: ForgotPasswordData): Promise<AxiosResponse<{ message: string }>> =>
     axiosInstance.post(API_ENDPOINTS.AUTH.FORGOT_PASSWORD, data),
 
   resetPassword: (data: ResetPasswordData): Promise<AxiosResponse<{ message: string }>> =>
     axiosInstance.post(API_ENDPOINTS.AUTH.RESET_PASSWORD, data),
+
+  refreshToken: (): Promise<AxiosResponse<{ token: string }>> =>
+    axiosInstance.post(API_ENDPOINTS.AUTH.REFRESH_TOKEN)
 };
