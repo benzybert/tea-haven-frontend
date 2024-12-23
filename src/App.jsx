@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
+import Products from './pages/Products';
 
 // Auth Components
 import LoginForm from './components/presentational/auth/LoginForm';  // Fix path
@@ -34,6 +35,7 @@ function App() {
                     <Profile />
                   </ProtectedRoute>
                 } />
+                <Route path="/products" element={<Products />} />
                 {/* Add a catch-all route for 404 */}
                 <Route path="*" element={<div>404 Not Found</div>} />
               </Routes>
