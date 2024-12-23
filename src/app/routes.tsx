@@ -1,62 +1,66 @@
-import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { useAuth } from '../store/auth/AuthContext';
-import { ROUTES } from '../config/constants';
+import { createBrowserRouter } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
+import ProtectedRoute from '../components/routing/ProtectedRoute';
 
-// Pages
-import HomePage from '../pages/HomePage';
-import LoginPage from '../pages/auth/LoginPage';
-import RegisterPage from '../pages/auth/RegisterPage';
-import ForgotPasswordPage from '../pages/auth/ForgotPasswordPage';
-import ResetPasswordPage from '../pages/auth/ResetPasswordPage';
-import ProfilePage from '../pages/ProfilePage';
+// Lazy loaded components
+const HomePage = lazy(() => import('../pages/HomePage'));
+const LoginPage = lazy(() => import('../pages/auth/LoginPage'));
+const RegisterPage = lazy(() => import('../pages/auth/RegisterPage'));
+const ForgotPasswordPage = lazy(() => import('../pages/auth/ForgotPasswordPage'));
+const ResetPasswordPage = lazy(() => import('../pages/auth/ResetPasswordPage'));
+const ProfilePage = lazy(() => import('../pages/ProfilePage'));
 
-interface ProtectedRouteProps {
-  children: React.ReactNode;
-}
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: (
+      <Suspense fallback={<div>Loading...</div>}>
+        <HomePage />
+      </Suspense>
+    ),
+  },
+  {
+    path: '/login',
+    element: (
+      <Suspense fallback={<div>Loading...</div>}>
+        <LoginPage />
+      </Suspense>
+    ),
+  },
+  {
+    path: '/register',
+    element: (
+      <Suspense fallback={<div>Loading...</div>}>
+        <RegisterPage />
+      </Suspense>
+    ),
+  },
+  {
+    path: '/forgot-password',
+    element: (
+      <Suspense fallback={<div>Loading...</div>}>
+        <ForgotPasswordPage />
+      </Suspense>
+    ),
+  },
+  {
+    path: '/reset-password/:token',
+    element: (
+      <Suspense fallback={<div>Loading...</div>}>
+        <ResetPasswordPage />
+      </Suspense>
+    ),
+  },
+  {
+    path: '/profile',
+    element: (
+      <ProtectedRoute>
+        <Suspense fallback={<div>Loading...</div>}>
+          <ProfilePage />
+        </Suspense>
+      </ProtectedRoute>
+    ),
+  },
+]);
 
-const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
-  const { isAuthenticated, isLoading } = useAuth();
-
-  if (isLoading) {
-    return (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-4 border-green-500 border-t-transparent" />
-      </div>
-    );
-  }
-
-  if (!isAuthenticated) {
-    return <Navigate to={ROUTES.LOGIN} />;
-  }
-
-  return <>{children}</>;
-};
-
-const AppRoutes: React.FC = () => {
-  return (
-    <Routes>
-      {/* Public Routes */}
-      <Route path={ROUTES.HOME} element={<HomePage />} />
-      <Route path={ROUTES.LOGIN} element={<LoginPage />} />
-      <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
-      <Route path={ROUTES.FORGOT_PASSWORD} element={<ForgotPasswordPage />} />
-      <Route path={`${ROUTES.RESET_PASSWORD}/:token`} element={<ResetPasswordPage />} />
-
-      {/* Protected Routes */}
-      <Route
-        path={ROUTES.PROFILE}
-        element={
-          <ProtectedRoute>
-            <ProfilePage />
-          </ProtectedRoute>
-        }
-      />
-
-      {/* Catch all route */}
-      <Route path="*" element={<Navigate to={ROUTES.HOME} />} />
-    </Routes>
-  );
-};
-
-export default AppRoutes;
+export default router;
