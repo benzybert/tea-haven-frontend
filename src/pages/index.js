@@ -1,5 +1,16 @@
 export { default as HomePage } from './HomePage';
-export * from './auth';
-export * from './products';
-export * from './cart';
-export * from './profile';
+export {
+  LoginPage,
+  RegisterPage,
+  ForgotPasswordPage,
+  ResetPasswordPage
+} from './auth';
+export {
+  ProductsPage,
+  ProductDetailsPage
+} from './products';
+export {
+  CartPage,
+  CheckoutPage
+} from './cart';
+export { ProfilePage } from './profile';
