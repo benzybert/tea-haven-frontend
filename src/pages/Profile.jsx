@@ -1,1 +1,0 @@
-// Placeholder for a Profile page component

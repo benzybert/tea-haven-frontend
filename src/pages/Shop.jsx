@@ -1,1 +1,0 @@
-// Placeholder for a Shop page component
