@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { authService } from '../services/auth.service';
+import { STORAGE_KEYS } from '../config/constants';
 
 const AuthContext = createContext();
 
@@ -9,7 +10,7 @@ export const AuthProvider = ({ children }) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
+    const storedUser = localStorage.getItem(STORAGE_KEYS.USER);
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
@@ -22,10 +23,10 @@ export const AuthProvider = ({ children }) => {
       setError(null);
       const response = await authService.login(credentials);
       setUser(response.data.user);
-      localStorage.setItem('user', JSON.stringify(response.data.user));
-      localStorage.setItem('token', response.data.token);
+      localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(response.data.user));
+      localStorage.setItem(STORAGE_KEYS.TOKEN, response.data.token);
       if (credentials.rememberMe) {
-        localStorage.setItem('refreshToken', response.data.refreshToken);
+        localStorage.setItem(STORAGE_KEYS.REFRESH_TOKEN, response.data.refreshToken);
       }
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed');
@@ -41,8 +42,8 @@ export const AuthProvider = ({ children }) => {
       setError(null);
       const response = await authService.register(userData);
       setUser(response.data.user);
-      localStorage.setItem('user', JSON.stringify(response.data.user));
-      localStorage.setItem('token', response.data.token);
+      localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(response.data.user));
+      localStorage.setItem(STORAGE_KEYS.TOKEN, response.data.token);
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed');
       throw err;
@@ -58,9 +59,9 @@ export const AuthProvider = ({ children }) => {
       console.error('Logout failed:', err);
     } finally {
       setUser(null);
-      localStorage.removeItem('user');
-      localStorage.removeItem('token');
-      localStorage.removeItem('refreshToken');
+      localStorage.removeItem(STORAGE_KEYS.USER);
+      localStorage.removeItem(STORAGE_KEYS.TOKEN);
+      localStorage.removeItem(STORAGE_KEYS.REFRESH_TOKEN);
     }
   };
 
@@ -68,7 +69,7 @@ export const AuthProvider = ({ children }) => {
     try {
       setIsLoading(true);
       setError(null);
-      await authService.forgotPassword(email);
+      await authService.forgotPassword({ email });
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to send reset email');
       throw err;
