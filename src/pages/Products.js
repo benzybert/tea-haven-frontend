@@ -1,5 +1,5 @@
 import React from 'react';
-import TeaList from '../components/features/tea/TeaList';
+import TeaList from '../components/container/features/tea/TeaList';
 
 const Products = () => {
     return (
