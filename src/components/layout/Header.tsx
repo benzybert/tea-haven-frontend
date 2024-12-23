@@ -12,44 +12,51 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="bg-white shadow-md">
+    <header className="bg-white shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-6">
-          <div className="flex items-center">
-            <Link to="/" className="text-2xl font-bold text-gray-900">
-              Tea Haven
-            </Link>
+        <div className="flex justify-between h-16">
+          <div className="flex">
+            <div className="flex-shrink-0 flex items-center">
+              <Link to="/" className="text-2xl font-bold text-indigo-600">
+                Tea Haven
+              </Link>
+            </div>
           </div>
-          <nav className="flex items-center space-x-4">
-            <Link to="/" className="text-gray-600 hover:text-gray-900">
-              Home
-            </Link>
-            {!isAuthenticated ? (
-              <>
-                <Link to="/login" className="text-gray-600 hover:text-gray-900">
-                  Login
-                </Link>
-                <Link 
-                  to="/register" 
-                  className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700"
+
+          <div className="flex items-center">
+            {isAuthenticated ? (
+              <div className="flex items-center space-x-4">
+                <span className="text-gray-700">Welcome, {user?.username}</span>
+                <Link
+                  to="/profile"
+                  className="text-gray-700 hover:text-indigo-600 transition-colors"
                 >
-                  Register
+                  Profile
                 </Link>
-              </>
-            ) : (
-              <>
-                <Link to="/profile" className="text-gray-600 hover:text-gray-900">
-                  {user?.username}
-                </Link>
-                <button 
+                <button
                   onClick={handleLogout}
-                  className="text-gray-600 hover:text-gray-900"
+                  className="text-gray-700 hover:text-indigo-600 transition-colors"
                 >
                   Logout
                 </button>
-              </>
+              </div>
+            ) : (
+              <div className="flex items-center space-x-4">
+                <Link
+                  to="/login"
+                  className="text-gray-700 hover:text-indigo-600 transition-colors"
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/register"
+                  className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors"
+                >
+                  Sign up
+                </Link>
+              </div>
             )}
-          </nav>
+          </div>
         </div>
       </div>
     </header>
