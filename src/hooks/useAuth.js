@@ -1,1 +1,1 @@
-// Placeholder for the useAuth hook
+export { useAuth } from '../context/AuthContext';
