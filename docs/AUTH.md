@@ -137,10 +137,3 @@ const AUTH_ENDPOINTS = {
    - Handle offline scenarios
    - Cache necessary data
 
-## Future Improvements
-
-1. OAuth Integration
-2. Two-Factor Authentication
-3. Biometric Authentication
-4. Session Management
-5. Enhanced Security Measures
