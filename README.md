@@ -22,8 +22,6 @@ Tea Haven is an e-commerce platform for tea enthusiasts. This repository contain
 - React Router DOM 7.0.2
 - Axios 1.7.9
 - Tailwind CSS 3.4.16
-- Headless UI React 2.2.0
-- Lucide React 0.263.1
 
 ## Authentication Features
 
