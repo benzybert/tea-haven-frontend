@@ -16,6 +16,9 @@ import Footer from './components/container/layout/Footer';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
 
+// Routing components
+import AppRoutes from './components/routing/AppRoutes';
+
 function App() {
   return (
     <AuthProvider>
@@ -24,21 +27,7 @@ function App() {
           <div className="min-h-screen flex flex-col">
             <Header />
             <main className="flex-grow">
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/login" element={<LoginForm />} />
-                <Route path="/register" element={<RegisterForm />} />
-                <Route path="/forgot-password" element={<ForgotPasswordForm />} />
-                <Route path="/reset-password/:token" element={<ResetPasswordForm />} />
-                <Route path="/profile" element={
-                  <ProtectedRoute>
-                    <Profile />
-                  </ProtectedRoute>
-                } />
-                <Route path="/products" element={<Products />} />
-                {/* Add a catch-all route for 404 */}
-                <Route path="*" element={<div>404 Not Found</div>} />
-              </Routes>
+              <AppRoutes />
             </main>
             <Footer />
           </div>
