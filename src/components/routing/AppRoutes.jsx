@@ -7,7 +7,7 @@ import ForgotPasswordForm from '../../components/presentational/auth/ForgotPassw
 import ResetPasswordForm from '../../components/presentational/auth/ResetPasswordForm';
 import Profile from '../../pages/Profile';
 import Products from '../../pages/Products';
-import ProtectedRoute from './ProtectedRoute';
+import ProtectedRoute from '../container/routing/ProtectedRoute';
 
 const AppRoutes = () => {
   return (
