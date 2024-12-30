@@ -1,29 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useTeas } from '../../../../hooks/useTeas'
+
 
 const TeaList = () => {
-  const [teas, setTeas] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { teas, loading, error } = useTeas();  // Use the custom hook
   const [filter, setFilter] = useState('all');
-
-  useEffect(() => {
-    const fetchTeas = async () => {
-      try {
-        const response = await axios.get('http://localhost:5001/api/teas/search', {
-          withCredentials: false
-        });
-        console.log('Tea data received:', response.data);
-        setTeas(response.data.products);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching teas:', error);
-        setError('Failed to load tea products. Please try again later.');
-        setLoading(false);
-      }
-    };
-    fetchTeas();
-  }, []);
 
   const filteredTeas = filter === 'all' 
     ? teas 

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { fetchAllTeas } from '../api/teaApi';
+
 
 /*
     This hook fetches all the teas from the backend and returns the teas,
