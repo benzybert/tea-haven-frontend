@@ -7,9 +7,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext'; 
 
 
-
 const LoginForm = () => {
-  const { values, errors, handleChange, handleSubmit } = useForm({
+  const { values, handleChange, handleSubmit } = useForm({
     email: '',
     password: ''
   });

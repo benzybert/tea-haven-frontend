@@ -1,7 +1,7 @@
 // src/hooks/useTokenAuth.js
 import { useState, useCallback } from 'react';
 import { authService } from '../services/auth';
-import { setTokens, removeTokens, getAccessToken } from '../utils/tokenStorage';
+import { removeTokens, getAccessToken } from '../utils/tokenStorage';
 
 const useTokenAuth = () => {
   const [user, setUser] = useState(null);
