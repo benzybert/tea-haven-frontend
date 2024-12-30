@@ -4,7 +4,7 @@ import { CartProvider } from './context/CartContext';
 import Products from './pages/Products';
 
 // Auth Components
-import LoginForm from './components/presentational/auth/LoginForm';  // Fix path
+import LoginForm from './components/presentational/auth/LoginForm';  
 import RegisterForm from './components/presentational/auth/RegisterForm';
 import ForgotPasswordForm from './components/presentational/auth/ForgotPasswordForm';
 import ResetPasswordForm from './components/presentational/auth/ResetPasswordForm';
