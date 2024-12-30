@@ -1,6 +1,6 @@
 // src/components/presentational/auth/LoginForm.jsx
 import { useForm } from '../../../hooks/useForm';
-import AuthLayout from '../../container/auth/AuthLayout';
+import FormLayout from '../../../components/common/FormLayout';
 import Input from '../forms/Input';
 import Button from '../forms/Button';
 import { Link, useNavigate } from 'react-router-dom';  
@@ -23,7 +23,7 @@ const LoginForm = () => {
   };
 
   return (
-    <AuthLayout
+    <FormLayout
       title="Sign in to your account"
       subtitle="Or"
       subtitleLink={
@@ -59,7 +59,7 @@ const LoginForm = () => {
           Sign in
         </Button>
       </form>
-    </AuthLayout>
+    </FormLayout>
   );
 };
 
