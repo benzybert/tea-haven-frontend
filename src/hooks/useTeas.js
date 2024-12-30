@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { fetchAllTeas } from '../services/teaService';
 
 
 /*

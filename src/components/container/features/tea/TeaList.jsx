@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useTeas } from '../../../../hooks/useTeas'
+import LoadingSpinner from '../../../presentational/common/LoadingSpinner'; 
+import TeaProductCard from './TeaProductCard';
 
 
 const TeaList = () => {
@@ -11,11 +13,7 @@ const TeaList = () => {
     ? teas 
     : teas.filter(tea => tea.category?.toLowerCase() === filter);
 
-  if (loading) return (
-    <div className="flex justify-center items-center min-h-screen">
-      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-500"></div>
-    </div>
-  );
+  if (loading) return <LoadingSpinner />;
 
   if (error) return (
     <div className="text-center text-red-600 p-4">{error}</div>
@@ -41,47 +39,19 @@ const TeaList = () => {
           ))}
         </div>
 
-        {/* Tea Grid */}
+          // tea grid
         <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
           {filteredTeas.map(tea => (
-            <div 
-              key={tea._id} 
-              className="bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden group"
-            >
-              <div className="relative aspect-w-4 aspect-h-3">
-                <img 
-                  src={tea.image} 
-                  alt={tea.name} 
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  onError={(e) => {
-                    e.target.src = '/images/tea-placeholder.jpg';
-                  }}
-                />
-                <div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-30 transition-all"></div>
-                <div className="absolute top-4 right-4 bg-white bg-opacity-90 px-3 py-1 rounded-full text-green-600 font-semibold">
-                  ${tea.price}
-                </div>
-              </div>
-              
-              <div className="p-6">
-                <div className="mb-4">
-                  <h2 className="text-xl font-bold mb-2 text-gray-800">{tea.name}</h2>
-                  <p className="text-gray-600 text-sm line-clamp-2">{tea.description}</p>
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-green-600 font-medium">
-                    {tea.category}
-                  </span>
-                  <button 
-                    className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 
-                             transition-colors duration-300 flex items-center space-x-2"
-                  >
-                    <span>Add to Cart</span>
-                  </button>
-                </div>
-              </div>
-            </div>
+            <TeaProductCard
+              key={tea._id}
+              name={tea.name}
+              price={tea.price}
+              description={tea.description}
+              imageUrl={tea.image}
+              rating={tea.rating}
+              category={tea.category}
+              isNew={tea.isNew}
+            />
           ))}
         </div>
 
