@@ -1,8 +1,8 @@
 // src/components/container/layout/Navigation.jsx
 import React from 'react';
 import PropTypes from 'prop-types';
-import AuthenticatedNav from './auth/AuthenticatedNav';
-import UnauthenticatedNav from './auth/UnauthenticatedNav';
+import AuthenticatedNav from '../auth/AuthenticatedNav';
+import UnauthenticatedNav from '../auth/UnauthenticatedNav';
 
 const Navigation = ({ isAuthenticated, user }) => (
   <div className="space-x-4">

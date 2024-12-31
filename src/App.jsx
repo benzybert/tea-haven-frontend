@@ -2,13 +2,11 @@ import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 
-// Auth Components
-
 // Layout Components
-import Header from './components/container/layout/Header';
-import Footer from './components/container/layout/Footer';
+import Header from './components/layout/Header';
+import Footer from './components/layout/Footer';
 
-// Routing components
+// Routing Components
 import AppRoutes from './components/routing/AppRoutes';
 
 function App() {

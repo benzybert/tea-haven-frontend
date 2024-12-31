@@ -1,11 +1,12 @@
 // src/components/presentational/auth/LoginForm.jsx
-import { useForm } from '../../../hooks/useForm';
-import FormLayout from '../../../components/common/FormLayout';
+import { useForm } from '../../hooks/useForm';
+import { Link, useNavigate } from 'react-router-dom';  
+import { useAuth } from '../../context/AuthContext'; 
+
+// Common Components
+import Layout from '../common/Layout';
 import Input from '../forms/Input';
 import Button from '../forms/Button';
-import { Link, useNavigate } from 'react-router-dom';  
-import { useAuth } from '../../../context/AuthContext'; 
-
 
 const LoginForm = () => {
   const { values, handleChange, handleSubmit } = useForm({
@@ -22,7 +23,8 @@ const LoginForm = () => {
   };
 
   return (
-    <FormLayout
+    <Layout
+      type="auth"
       title="Sign in to your account"
       subtitle="Or"
       subtitleLink={
@@ -58,7 +60,7 @@ const LoginForm = () => {
           Sign in
         </Button>
       </form>
-    </FormLayout>
+    </Layout>
   );
 };
 

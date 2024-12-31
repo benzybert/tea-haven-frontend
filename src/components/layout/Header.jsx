@@ -1,6 +1,6 @@
 // src/components/container/layout/Header.jsx
 import React, { memo } from 'react';
-import { useAuth } from '../../../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 import Logo from './Logo';
 import Navigation from './Navigation';
 
