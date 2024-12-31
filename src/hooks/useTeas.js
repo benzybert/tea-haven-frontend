@@ -1,41 +1,60 @@
 /**
- * Single Responsibility: Manages tea product data, including fetching, filtering,
- * and state management. Combines data fetching with category filtering.
+ * Custom hooks for tea-related functionality with separated concerns
  */
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { teaService } from '../services/teaService';
 
-export const useTeas = () => {
+// Separate hook for data fetching
+export const useTeaData = () => {
   const [teas, setTeas] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [lastUpdated, setLastUpdated] = useState(null);
+
+  const fetchTeas = useCallback(async (params = {}) => {
+    try {
+      setIsLoading(true);
+      const data = await teaService.getAllTeas(params);
+      setTeas(data.products || []);
+      setLastUpdated(new Date());
+      setError(null);
+    } catch (err) {
+      setError(err.message || 'Failed to load tea products');
+      setTeas([]);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  const refreshTeas = useCallback(() => {
+    fetchTeas();
+  }, [fetchTeas]);
+
+  return {
+    teas,
+    isLoading,
+    error,
+    lastUpdated,
+    refreshTeas,
+    fetchTeas
+  };
+};
+
+// Main hook combining filtering with data
+export const useTeas = () => {
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const { teas, isLoading, error, fetchTeas, ...rest } = useTeaData();
 
   useEffect(() => {
-    const fetchTeas = async () => {
-      try {
-        setIsLoading(true);
-        const data = selectedCategory
-          ? await teaService.getTeasByCategory(selectedCategory)
-          : await teaService.getAllTeas();
-        setTeas(data);
-        setError(null);
-      } catch (err) {
-        setError('Failed to load tea products. Please try again later.');
-        setTeas([]);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchTeas();
-  }, [selectedCategory]);
+    fetchTeas(selectedCategory ? { category: selectedCategory } : {});
+  }, [selectedCategory, fetchTeas]);
 
   return {
     teas,
     selectedCategory,
     setSelectedCategory,
     isLoading,
-    error
+    error,
+    ...rest
   };
 };
