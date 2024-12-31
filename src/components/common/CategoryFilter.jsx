@@ -1,3 +1,8 @@
+/**
+ * Single Responsibility: Provides a filterable category selection interface,
+ * managing the display and selection of tea categories for product filtering.
+ */
+import React from 'react';
 import { TEA_CATEGORIES } from '../../constants/categories';
 
 const CategoryFilter = ({ selected, onChange }) => (

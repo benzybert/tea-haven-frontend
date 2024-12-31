@@ -1,3 +1,7 @@
+/**
+ * Single Responsibility: Displays error messages in a consistent format with configurable
+ * variants (inline/alert), handling both simple text and styled alert presentations.
+ */
 const ErrorMessage = ({ message, variant = 'inline' }) => {
   if (!message) return null;
 

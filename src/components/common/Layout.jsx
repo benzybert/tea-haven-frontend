@@ -1,3 +1,7 @@
+/**
+ * Single Responsibility: Provides a consistent page structure with configurable layouts
+ * (auth, form, default) handling responsive container sizing and content centering.
+ */
 import React from 'react';
 
 // Single layout component with type prop to determine specific styling/behavior

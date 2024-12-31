@@ -1,3 +1,7 @@
+/**
+ * Single Responsibility: Renders a responsive grid of tea products with consistent spacing
+ * and handles empty state display when no items are present.
+ */
 import TeaProductCard from '../features/TeaProductCard';
 
 const TeaGrid = ({ items }) => (

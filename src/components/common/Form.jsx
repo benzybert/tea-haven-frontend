@@ -1,3 +1,7 @@
+/**
+ * Single Responsibility: Provides a reusable form component that handles input rendering,
+ * form submission, loading states, and error display in a consistent manner across the application.
+ */
 import React from 'react';
 import Input from '../forms/Input';
 import Button from '../forms/Button';
