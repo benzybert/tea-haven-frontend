@@ -1,60 +1,28 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTeas } from '../../hooks/useTeas';
+import { useCategories } from '../../hooks/useCategories';
+import { TEA_CATEGORIES } from '../../constants/categories';
 import LoadingSpinner from '../common/LoadingSpinner';
-import TeaProductCard from './TeaProductCard';
+import ErrorMessage from '../common/ErrorMessage';
+import CategoryFilter from '../common/CategoryFilter';
+import TeaGrid from '../common/TeaGrid';
 
 const TeaList = () => {
   const { teas, loading, error } = useTeas();
-  const [filter, setFilter] = useState('all');
-
-  const categories = [
-    { id: 'all', name: 'All Teas' },
-    { id: 'green', name: 'Green Tea' },
-    { id: 'black', name: 'Black Tea' },
-    { id: 'oolong', name: 'Oolong Tea' },
-    { id: 'herbal', name: 'Herbal Tea' }
-  ];
-
-  const filteredTeas = filter === 'all' 
-    ? teas 
-    : teas.filter(tea => tea.category?.toLowerCase() === filter);
+  const { filter, setFilter, filteredItems } = useCategories(teas);
 
   if (loading) return <LoadingSpinner />;
-  if (error) return <div className="text-center text-red-600 p-4">{error}</div>;
+  if (error) return <ErrorMessage message={error} />;
 
   return (
     <div className="bg-gray-50 min-h-screen py-8">
       <div className="container mx-auto px-4">
-        <div className="mb-8 flex justify-center space-x-4">
-          {categories.map(category => (
-            <button
-              key={category.id}
-              onClick={() => setFilter(category.id)}
-              className={`px-6 py-2 rounded-full transition-all ${
-                filter === category.id 
-                  ? 'bg-green-600 text-white shadow-lg' 
-                  : 'bg-white text-gray-600 hover:bg-green-50'
-              }`}
-            >
-              {category.name}
-            </button>
-          ))}
-        </div>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-          {filteredTeas.map(tea => (
-            <TeaProductCard
-              key={tea._id}
-              {...tea}
-            />
-          ))}
-        </div>
-
-        {filteredTeas.length === 0 && (
-          <div className="text-center text-gray-600 py-12">
-            No teas found in this category.
-          </div>
-        )}
+        <CategoryFilter 
+          categories={TEA_CATEGORIES} 
+          selected={filter}
+          onChange={setFilter}
+        />
+        <TeaGrid items={filteredItems} />
       </div>
     </div>
   );

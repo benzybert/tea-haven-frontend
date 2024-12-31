@@ -1,16 +1,8 @@
 import React, { useState } from 'react';
 import { Card, CardHeader, CardContent } from '@/components/ui/card';
 import { Tea, Star, Clock, Thermometer } from 'lucide-react';
-
-const categories = [
-  { id: 'all', name: 'All Teas' },
-  { id: 'green', name: 'Green Tea' },
-  { id: 'black', name: 'Black Tea' },
-  { id: 'oolong', name: 'Oolong Tea' },
-  { id: 'white', name: 'White Tea' },
-  { id: 'herbal', name: 'Herbal Tea' },
-  { id: 'rooibos', name: 'Rooibos' }
-];
+import { TEA_CATEGORIES } from '../../constants/categories';
+import { useCategories } from '../../hooks/useCategories';
 
 // Sample data - replace with your API call
 const sampleProducts = [
@@ -42,11 +34,8 @@ const sampleProducts = [
 ];
 
 const ProductCatalog = () => {
-  const [selectedCategory, setSelectedCategory] = useState('all');
-
-  const filteredProducts = selectedCategory === 'all'
-    ? sampleProducts
-    : sampleProducts.filter(product => product.category === selectedCategory);
+  const { filter: selectedCategory, setFilter: setSelectedCategory, filteredItems: filteredProducts } = 
+    useCategories(sampleProducts);
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
@@ -54,7 +43,7 @@ const ProductCatalog = () => {
       <div className="mb-8">
         <h2 className="text-2xl font-bold mb-4">Tea Categories</h2>
         <div className="flex flex-wrap gap-2">
-          {categories.map(category => (
+          {TEA_CATEGORIES.map(category => (
             <button
               key={category.id}
               onClick={() => setSelectedCategory(category.id)}

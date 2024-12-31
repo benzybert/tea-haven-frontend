@@ -8,17 +8,28 @@ import { useAuthNavigation } from '../../hooks/useAuthNavigation';
 import Layout from '../common/Layout';
 import Input from '../forms/Input';
 import Button from '../forms/Button';
+import Form from '../common/Form';
 
 const LoginForm = () => {
-  const { values, handleChange, handleSubmit } = useForm({
-    email: '',
-    password: ''
-  });
-
   const { login, isLoading } = useAuth();
-  const { onLoginSuccess, goToRegister } = useAuthNavigation();
+  const { onLoginSuccess } = useAuthNavigation();
 
-  const onSubmit = async (formData) => {
+  const fields = [
+    {
+      name: 'email',
+      type: 'email',
+      placeholder: 'Email address',
+      required: true
+    },
+    {
+      name: 'password',
+      type: 'password',
+      placeholder: 'Password',
+      required: true
+    }
+  ];
+
+  const handleSubmit = async (formData) => {
     await login(formData);
     onLoginSuccess();
   };
@@ -30,40 +41,19 @@ const LoginForm = () => {
       subtitle="Or"
       subtitleLink={
         <Link 
-          onClick={goToRegister} 
+          to="/register" 
           className="font-medium text-indigo-600 hover:text-indigo-500"
         >
           create a new account
         </Link>
       }
     >
-      <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
-        <div className="rounded-md shadow-sm -space-y-px">
-          <Input
-            id="email"
-            name="email"
-            type="email"
-            label="Email address"
-            placeholder="Email address"
-            value={values.email}
-            onChange={handleChange}
-            isFirst
-          />
-          <Input
-            id="password"
-            name="password"
-            type="password"
-            label="Password"
-            placeholder="Password"
-            value={values.password}
-            onChange={handleChange}
-            isLast
-          />
-        </div>
-        <Button type="submit" disabled={isLoading}>
-          Sign in
-        </Button>
-      </form>
+      <Form
+        fields={fields}
+        onSubmit={handleSubmit}
+        submitText="Sign in"
+        isLoading={isLoading}
+      />
     </Layout>
   );
 };
