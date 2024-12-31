@@ -1,7 +1,7 @@
-const LoadingSpinner = () => (
-    <div className="flex justify-center items-center min-h-screen">
-      <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-500"></div>
-    </div>
-  );
-  
+const LoadingSpinner = ({ size = 12, color = 'green-500', fullScreen = true }) => (
+  <div className={`flex justify-center items-center ${fullScreen ? 'min-h-screen' : ''}`}>
+    <div className={`animate-spin rounded-full h-${size} w-${size} border-t-2 border-b-2 border-${color}`}></div>
+  </div>
+);
+
 export default LoadingSpinner;

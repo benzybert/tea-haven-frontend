@@ -3,7 +3,7 @@ import { useTeas } from '../../hooks/useTeas';
 import LoadingSpinner from '../common/LoadingSpinner';
 import TeaProductCard from './TeaProductCard';
 
-const TeaList = ({ displayStyle = 'grid' }) => {
+const TeaList = () => {
   const { teas, loading, error } = useTeas();
   const [filter, setFilter] = useState('all');
 
@@ -41,7 +41,7 @@ const TeaList = ({ displayStyle = 'grid' }) => {
           ))}
         </div>
 
-        <div className={`grid ${displayStyle === 'grid' ? 'md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4' : ''} gap-8`}>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
           {filteredTeas.map(tea => (
             <TeaProductCard
               key={tea._id}

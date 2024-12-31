@@ -5,5 +5,5 @@ export const ROUTES = {
   PROFILE: '/profile',
   PRODUCTS: '/products',
   FORGOT_PASSWORD: '/forgot-password',
-  RESET_PASSWORD: '/reset-password/:token',
-} as const; 
+  RESET_PASSWORD: '/reset-password/:token'
+}; 
