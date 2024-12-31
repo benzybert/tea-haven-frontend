@@ -1,7 +1,8 @@
 // src/components/presentational/auth/LoginForm.jsx
+import { Link } from 'react-router-dom';  
 import { useForm } from '../../hooks/useForm';
-import { Link, useNavigate } from 'react-router-dom';  
 import { useAuth } from '../../context/AuthContext'; 
+import { useAuthNavigation } from '../../hooks/useAuthNavigation';
 
 // Common Components
 import Layout from '../common/Layout';
@@ -15,11 +16,11 @@ const LoginForm = () => {
   });
 
   const { login, isLoading } = useAuth();
-  const navigate = useNavigate();
+  const { onLoginSuccess, goToRegister } = useAuthNavigation();
 
   const onSubmit = async (formData) => {
     await login(formData);
-    navigate('/');
+    onLoginSuccess();
   };
 
   return (
@@ -28,7 +29,10 @@ const LoginForm = () => {
       title="Sign in to your account"
       subtitle="Or"
       subtitleLink={
-        <Link to="/register" className="font-medium text-indigo-600 hover:text-indigo-500">
+        <Link 
+          onClick={goToRegister} 
+          className="font-medium text-indigo-600 hover:text-indigo-500"
+        >
           create a new account
         </Link>
       }

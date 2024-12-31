@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { useAuthNavigation } from '../../hooks/useAuthNavigation';
 
 const ResetPasswordForm = () => {
   const [formData, setFormData] = useState({
@@ -11,6 +12,7 @@ const ResetPasswordForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { token } = useParams();
   const navigate = useNavigate();
+  const { onResetSuccess } = useAuthNavigation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,7 +33,7 @@ const ResetPasswordForm = () => {
         }
       );
       setMessage(response.data.message);
-      setTimeout(() => navigate('/login'), 3000);
+      onResetSuccess();
     } catch (error) {
       setMessage(error.response?.data?.message || 'An error occurred');
     } finally {
