@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import AuthFormLayout from '../layouts/AuthFormLayout';
+import AuthFormLayout from '../../components/auth/AuthFormLayout';
 
 const ForgotPasswordForm = () => {
   const [email, setEmail] = useState('');

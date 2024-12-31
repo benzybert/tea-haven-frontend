@@ -1,19 +1,11 @@
 import TeaProductCard from '../features/TeaProductCard';
 
-const TeaGrid = ({ 
-  items, 
-  emptyMessage = "No teas found in this category.",
-  columns = {
-    md: 2,
-    lg: 3,
-    xl: 4
-  }
-}) => (
+const TeaGrid = ({ items }) => (
   <>
-    <div className={`grid md:grid-cols-${columns.md} lg:grid-cols-${columns.lg} xl:grid-cols-${columns.xl} gap-8`}>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
       {items.map(tea => (
         <TeaProductCard
-          key={tea._id || tea.id}
+          key={tea._id}
           {...tea}
         />
       ))}
@@ -21,7 +13,7 @@ const TeaGrid = ({
 
     {items.length === 0 && (
       <div className="text-center text-gray-600 py-12">
-        {emptyMessage}
+        No teas found in this category.
       </div>
     )}
   </>
