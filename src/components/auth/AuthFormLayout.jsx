@@ -1,3 +1,7 @@
+/**
+ * Single Responsibility: Provides a consistent layout structure for all authentication forms,
+ * handling the presentation of the title, optional message, and centering of content.
+ */
 import React from 'react';
 
 const AuthFormLayout = ({ title, message, children }) => (

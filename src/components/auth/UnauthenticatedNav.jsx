@@ -1,3 +1,7 @@
+/**
+ * Single Responsibility: Displays navigation elements for non-authenticated users,
+ * providing links to sign in and register pages.
+ */
 // src/components/container/layout/auth/UnauthenticatedNav.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';

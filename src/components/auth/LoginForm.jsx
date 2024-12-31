@@ -1,3 +1,7 @@
+/**
+ * Single Responsibility: Handles user authentication by collecting credentials (email, password)
+ * and managing the login process through the auth service.
+ */
 // src/components/presentational/auth/LoginForm.jsx
 import { Link } from 'react-router-dom';  
 import { useForm } from '../../hooks/useForm';

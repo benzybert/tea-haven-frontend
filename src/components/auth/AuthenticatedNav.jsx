@@ -1,3 +1,7 @@
+/**
+ * Single Responsibility: Displays navigation elements specific to authenticated users,
+ * showing the user's name and profile link.
+ */
 // src/components/container/layout/auth/AuthenticatedNav.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';

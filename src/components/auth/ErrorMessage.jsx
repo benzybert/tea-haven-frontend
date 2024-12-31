@@ -1,3 +1,7 @@
+/**
+ * Single Responsibility: Displays error messages in a consistent, styled format
+ * with an error icon and red color scheme for visual emphasis.
+ */
 const ErrorMessage = ({ message }) => {
   if (!message) return null;
 

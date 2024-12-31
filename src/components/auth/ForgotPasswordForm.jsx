@@ -1,62 +1,42 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import AuthFormLayout from '../../components/auth/AuthFormLayout';
+/**
+ * Single Responsibility: Handles password reset requests by collecting the user's email
+ * and initiating the password reset process through the auth service.
+ */
+import { useAuth } from '../../context/AuthContext';
+import AuthFormLayout from './AuthFormLayout';
+import Form from '../common/Form';
 
 const ForgotPasswordForm = () => {
-  const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const { forgotPassword, isLoading } = useAuth();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-    
+  const fields = [
+    {
+      name: 'email',
+      type: 'email',
+      placeholder: 'Email address',
+      required: true
+    }
+  ];
+
+  const handleSubmit = async (formData) => {
     try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/auth/forgot-password`,
-        { email }
-      );
-      setMessage(response.data.message);
+      const response = await forgotPassword(formData.email);
+      return response.message;
     } catch (error) {
-      setMessage(error.response?.data?.message || 'An error occurred');
-    } finally {
-      setIsLoading(false);
+      throw error.response?.data?.message || 'An error occurred';
     }
   };
 
   return (
     <AuthFormLayout 
       title="Reset your password"
-      message={message}
     >
-      <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email" className="sr-only">
-            Email address
-          </label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            autoComplete="email"
-            required
-            className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            placeholder="Email address"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-
-        <div>
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
-          >
-            {isLoading ? 'Sending...' : 'Send reset link'}
-          </button>
-        </div>
-      </form>
+      <Form
+        fields={fields}
+        onSubmit={handleSubmit}
+        submitText="Send reset link"
+        isLoading={isLoading}
+      />
     </AuthFormLayout>
   );
 };
