@@ -7,9 +7,15 @@ import { useTeas } from '../../hooks/useTeas';
 import LoadingSpinner from '../common/LoadingSpinner';
 import ErrorMessage from '../common/ErrorMessage';
 import CategoryFilter from '../common/CategoryFilter';
-import TeaGrid from '../common/TeaGrid';
+import TeaGrid from '../features/TeaGrid'; // Updated import path
+/**
+ * TeaList Component
+ * Displays a filterable list of tea products by composing
+ * reusable components and delegating data management to hooks.
+ */
 
 const TeaList = () => {
+  // Hooks
   const { 
     teas, 
     selectedCategory,

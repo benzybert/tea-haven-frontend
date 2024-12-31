@@ -2,6 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // Enhance Input component to handle all form input cases
+// 
+/**
+ * Input Component
+ * A reusable input component with customizable styles
+ */
 const Input = ({ 
   label, 
   error, 

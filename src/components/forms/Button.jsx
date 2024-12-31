@@ -1,4 +1,7 @@
-// src/components/presentational/forms/Button.jsx
+/**   
+ * Button Component
+ * A reusable button component with customizable styles
+ */
 const Button = ({ children, className = '', ...props }) => {
     return (
       <button
