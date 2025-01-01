@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
+import { useAuthNavigation } from '../../../hooks/useAuthNavigation';
 import { handleAsyncOperation } from '../../../utils/errorHandling';
 import Layout from '../../common/Layout';
 import Form from '../../common/Form';
@@ -8,18 +9,21 @@ import Form from '../../common/Form';
 const ResetPasswordForm = () => {
   const { token } = useParams();
   const { resetPassword } = useAuth();
+  const { onResetSuccess } = useAuthNavigation();
 
   const fields = [
     {
       name: 'password',
       type: 'password',
       label: 'New Password',
+      placeholder: 'Enter new password',
       required: true
     },
     {
       name: 'confirmPassword',
       type: 'password',
       label: 'Confirm Password',
+      placeholder: 'Confirm your password',
       required: true
     }
   ];
@@ -27,20 +31,27 @@ const ResetPasswordForm = () => {
   const handleSubmit = async (values) => {
     await handleAsyncOperation(
       async () => {
-        await resetPassword(token, values.password);
+        const response = await resetPassword(token, values.password);
+        onResetSuccess();
+        return response.message;
       },
       {
         showLoader: true,
-        showError: true
+        showError: true,
+        validateForm: () => {
+          if (values.password !== values.confirmPassword) {
+            throw new Error('Passwords do not match');
+          }
+        }
       }
     );
   };
 
   return (
-    <Layout
+    <Layout 
       type="auth"
       title="Reset your password"
-      message="Please enter your new password."
+      message="Please enter and confirm your new password."
     >
       <Form
         formType="passwordReset"

@@ -15,7 +15,6 @@ import Profile from '../../pages/Profile';
 import LoginForm from '../auth/LoginForm';
 import RegisterForm from '../auth/RegisterForm';
 import ForgotPasswordForm from '../auth/ForgotPasswordForm';
-import ResetPasswordForm from '../auth/ResetPasswordForm';
 import ProtectedRoute from '../auth/ProtectedRoute';
 
 // Route Configurations
@@ -25,7 +24,6 @@ const publicRoutes = [
   { path: '/login', element: <LoginForm /> },
   { path: '/register', element: <RegisterForm /> },
   { path: '/forgot-password', element: <ForgotPasswordForm /> },
-  { path: '/reset-password/:token', element: <ResetPasswordForm /> },
 ];
 
 const protectedRoutes = [
