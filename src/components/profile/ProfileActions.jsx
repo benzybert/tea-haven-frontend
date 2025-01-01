@@ -1,18 +1,13 @@
 import React from 'react';
-import Button from '../forms/Button';
-import { STYLES } from '../../utils/styles';
+import Button from '../common/Button';
 
-const ProfileActions = ({ onLogout }) => (
-  <div className={STYLES.flex.between}>
-    <h1 className={STYLES.text.heading}>Profile</h1>
-    <Button
-      variant="danger"
-      onClick={onLogout}
-      className="w-auto"
-    >
-      Logout
-    </Button>
-  </div>
-);
+const ProfileActions = () => {
+  return (
+    <div className="space-y-4">
+      <Button variant="secondary">Edit Profile</Button>
+      <Button variant="danger">Delete Account</Button>
+    </div>
+  );
+};
 
 export default ProfileActions; 

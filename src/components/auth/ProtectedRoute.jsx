@@ -3,9 +3,9 @@
  * unauthorized users to the login page while allowing authorized users to access protected content.
  */
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import LoadingSpinner from '../common/LoadingSpinner';
 import { ROUTES } from '../../constants/routes';
 
 const ProtectedRoute = ({ children }) => {
@@ -13,11 +13,7 @@ const ProtectedRoute = ({ children }) => {
   const location = useLocation();
 
   if (isLoading) {
-    return (
-      <div className="flex justify-center items-center min-h-screen">
-        <LoadingSpinner />
-      </div>
-    );
+    return <div>Loading...</div>;
   }
 
   if (!isAuthenticated) {
@@ -25,6 +21,10 @@ const ProtectedRoute = ({ children }) => {
   }
 
   return children;
+};
+
+ProtectedRoute.propTypes = {
+  children: PropTypes.node.isRequired
 };
 
 export default ProtectedRoute;

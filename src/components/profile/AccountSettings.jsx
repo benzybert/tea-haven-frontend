@@ -9,6 +9,7 @@ const AccountSettings = () => {
 
   return (
     <div className="space-y-6">
+      <h3 className="text-lg font-medium text-gray-900">Account Settings</h3>
       {!showPasswordForm ? (
         <Button
           variant="secondary"

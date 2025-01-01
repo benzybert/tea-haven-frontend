@@ -1,18 +1,36 @@
 import Home from '../pages/Home';
 import Products from '../pages/Products';
 import Profile from '../pages/Profile';
-import LoginForm from '../components/auth/LoginForm';
-import RegisterForm from '../components/auth/RegisterForm';
-import ForgotPasswordForm from '../components/auth/ForgotPasswordForm';
+import LoginForm from '../forms/templates/auth/LoginForm';
+import RegisterForm from '../forms/templates/auth/RegisterForm';
+import ForgotPasswordForm from '../forms/templates/auth/password/ForgotPasswordForm';
 
 export const ROUTES = {
   HOME: '/',
   LOGIN: '/login',
   REGISTER: '/register',
+  FORGOT_PASSWORD: '/forgot-password',
+  RESET_PASSWORD: '/reset-password',
   PROFILE: '/profile',
   PRODUCTS: '/products',
-  FORGOT_PASSWORD: '/forgot-password'
+  CART: '/cart',
+  CHECKOUT: '/checkout'
 };
+
+export const AUTH_ROUTES = [
+  {
+    path: ROUTES.LOGIN,
+    component: LoginForm
+  },
+  {
+    path: ROUTES.REGISTER,
+    component: RegisterForm
+  },
+  {
+    path: ROUTES.FORGOT_PASSWORD,
+    component: ForgotPasswordForm
+  }
+];
 
 export const publicRoutes = [
   { path: ROUTES.HOME, element: <Home /> },

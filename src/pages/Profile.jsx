@@ -1,55 +1,29 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 import { useAuth } from '../context/AuthContext';
-import { handleAsyncOperation } from '../utils/errorHandling';
-import { STYLES } from '../utils/styles';
-
-import Layout from '../components/common/Layout';
-import ErrorMessage from '../components/common/ErrorMessage';
 import ProfileInfo from '../components/profile/ProfileInfo';
 import ProfileActions from '../components/profile/ProfileActions';
 import AccountSettings from '../components/profile/AccountSettings';
 
-const useLogout = () => {
-  const { logout } = useAuth();
-  const navigate = useNavigate();
-  const [error, setError] = useState(null);
-
-  const handleLogout = async () => {
-    await handleAsyncOperation(
-      async () => {
-        await logout();
-        navigate('/');
-      },
-      {
-        showError: true,
-        onError: (err) => setError(err.message)
-      }
-    );
-  };
-
-  return { handleLogout, error };
-};
-
 const Profile = () => {
   const { user } = useAuth();
-  const { handleLogout, error } = useLogout();
 
   return (
-    <Layout type="default">
-      <div className={STYLES.card.container}>
-        <div className={STYLES.card.body}>
-          {error && <ErrorMessage message={error} variant="alert" />}
-          
-          <ProfileActions onLogout={handleLogout} />
-          
-          <div className={STYLES.spacing.section}>
-            <ProfileInfo user={user} />
-            <AccountSettings />
+    <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+      <div className="px-4 py-6 sm:px-0">
+        <div className="bg-white shadow overflow-hidden sm:rounded-lg">
+          <div className="px-4 py-5 sm:px-6">
+            <h1 className="text-2xl font-bold text-gray-900">Profile</h1>
+          </div>
+          <div className="border-t border-gray-200 px-4 py-5 sm:p-6">
+            <div className="space-y-8">
+              <ProfileInfo user={user} />
+              <ProfileActions />
+              <AccountSettings />
+            </div>
           </div>
         </div>
       </div>
-    </Layout>
+    </div>
   );
 };
 
