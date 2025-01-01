@@ -1,35 +1,10 @@
 import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-
-// Layout Components
 import Layout from '../common/Layout';
 import LoadingSpinner from '../common/LoadingSpinner';
-
-// Page Components
-import Home from '../../pages/Home';
-import Products from '../../pages/Products';
-import Profile from '../../pages/Profile';
-
-// Auth Components
-import LoginForm from '../auth/LoginForm';
-import RegisterForm from '../auth/RegisterForm';
-import ForgotPasswordForm from '../auth/ForgotPasswordForm';
+import { publicRoutes, protectedRoutes } from '../../constants/routes';
 import ProtectedRoute from '../auth/ProtectedRoute';
-
-// Route Configurations
-const publicRoutes = [
-  { path: '/', element: <Home /> },
-  { path: '/products', element: <Products /> },
-  { path: '/login', element: <LoginForm /> },
-  { path: '/register', element: <RegisterForm /> },
-  { path: '/forgot-password', element: <ForgotPasswordForm /> },
-];
-
-const protectedRoutes = [
-  { path: '/profile', element: <Profile /> },
-  // Add more protected routes here
-];
 
 const AppRoutes = () => {
   const { isAuthenticated, isLoading } = useAuth();
@@ -44,20 +19,18 @@ const AppRoutes = () => {
 
   return (
     <Routes>
-      {/* Public Routes */}
       {publicRoutes.map(({ path, element }) => (
-        <Route 
-          key={path} 
-          path={path} 
+        <Route
+          key={path}
+          path={path}
           element={
             <Layout type="default">
               {element}
             </Layout>
-          } 
+          }
         />
       ))}
-
-      {/* Protected Routes */}
+      
       {protectedRoutes.map(({ path, element }) => (
         <Route
           key={path}
@@ -72,7 +45,6 @@ const AppRoutes = () => {
         />
       ))}
 
-      {/* Catch-all route */}
       <Route 
         path="*" 
         element={

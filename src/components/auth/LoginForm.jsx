@@ -4,34 +4,18 @@
  */
 // src/components/presentational/auth/LoginForm.jsx
 import { Link } from 'react-router-dom';  
-import { useForm } from '../../hooks/useForm';
 import { useAuth } from '../../context/AuthContext'; 
 import { useAuthNavigation } from '../../hooks/useAuthNavigation';
+import { ROUTES } from '../../constants/routes';
+import { loginFormFields } from '../../constants/formFields';
 
 // Common Components
 import Layout from '../common/Layout';
-import Input from '../forms/Input';
-import Button from '../forms/Button';
 import Form from '../common/Form';
 
 const LoginForm = () => {
   const { login, isLoading } = useAuth();
   const { onLoginSuccess } = useAuthNavigation();
-
-  const fields = [
-    {
-      name: 'email',
-      type: 'email',
-      placeholder: 'Email address',
-      required: true
-    },
-    {
-      name: 'password',
-      type: 'password',
-      placeholder: 'Password',
-      required: true
-    }
-  ];
 
   const handleSubmit = async (formData) => {
     await login(formData);
@@ -45,7 +29,7 @@ const LoginForm = () => {
       subtitle="Or"
       subtitleLink={
         <Link 
-          to="/register" 
+          to={ROUTES.REGISTER}
           className="font-medium text-indigo-600 hover:text-indigo-500"
         >
           create a new account
@@ -53,7 +37,7 @@ const LoginForm = () => {
       }
     >
       <Form
-        fields={fields}
+        fields={loginFormFields}
         onSubmit={handleSubmit}
         submitText="Sign in"
         isLoading={isLoading}

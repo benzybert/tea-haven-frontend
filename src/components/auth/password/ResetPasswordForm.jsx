@@ -5,28 +5,12 @@ import { useAuthNavigation } from '../../../hooks/useAuthNavigation';
 import { handleAsyncOperation } from '../../../utils/errorHandling';
 import Layout from '../../common/Layout';
 import Form from '../../common/Form';
+import { resetPasswordFormFields } from '../../../constants/formFields';
 
 const ResetPasswordForm = () => {
   const { token } = useParams();
   const { resetPassword } = useAuth();
   const { onResetSuccess } = useAuthNavigation();
-
-  const fields = [
-    {
-      name: 'password',
-      type: 'password',
-      label: 'New Password',
-      placeholder: 'Enter new password',
-      required: true
-    },
-    {
-      name: 'confirmPassword',
-      type: 'password',
-      label: 'Confirm Password',
-      placeholder: 'Confirm your password',
-      required: true
-    }
-  ];
 
   const handleSubmit = async (values) => {
     await handleAsyncOperation(
@@ -55,7 +39,7 @@ const ResetPasswordForm = () => {
     >
       <Form
         formType="passwordReset"
-        fields={fields}
+        fields={resetPasswordFormFields}
         onSubmit={handleSubmit}
         submitText="Reset Password"
       />

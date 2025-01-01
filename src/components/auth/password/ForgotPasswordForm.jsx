@@ -3,19 +3,10 @@ import { useAuth } from '../../../context/AuthContext';
 import { handleAsyncOperation } from '../../../utils/errorHandling';
 import Layout from '../../common/Layout';
 import Form from '../../common/Form';
+import { forgotPasswordFormFields } from '../../../constants/formFields';
 
 const ForgotPasswordForm = () => {
   const { forgotPassword } = useAuth();
-
-  const fields = [
-    {
-      name: 'email',
-      type: 'email',
-      label: 'Email address',
-      placeholder: 'Enter your email',
-      required: true
-    }
-  ];
 
   const handleSubmit = async (values) => {
     await handleAsyncOperation(
@@ -38,7 +29,7 @@ const ForgotPasswordForm = () => {
     >
       <Form
         formType="passwordReset"
-        fields={fields}
+        fields={forgotPasswordFormFields}
         onSubmit={handleSubmit}
         submitText="Send reset link"
       />

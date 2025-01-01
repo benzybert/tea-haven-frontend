@@ -5,29 +5,9 @@ import { handleAsyncOperation } from '../../../utils/errorHandling';
 import { authService } from '../../../services/auth';
 import Form from '../../common/Form';
 import Button from '../../forms/Button';
+import { changePasswordFormFields } from '../../../constants/formFields';
 
 const PasswordChangeForm = ({ onSuccess, onCancel }) => {
-  const fields = [
-    {
-      name: 'currentPassword',
-      type: 'password',
-      label: 'Current Password',
-      required: true
-    },
-    {
-      name: 'newPassword',
-      type: 'password',
-      label: 'New Password',
-      required: true
-    },
-    {
-      name: 'confirmPassword',
-      type: 'password',
-      label: 'Confirm New Password',
-      required: true
-    }
-  ];
-
   const handleSubmit = async (values) => {
     await handleAsyncOperation(
       async () => {
@@ -48,7 +28,7 @@ const PasswordChangeForm = ({ onSuccess, onCancel }) => {
     <div className="mt-4">
       <Form
         formType="passwordChange"
-        fields={fields}
+        fields={changePasswordFormFields}
         onSubmit={handleSubmit}
         submitText="Update Password"
       />

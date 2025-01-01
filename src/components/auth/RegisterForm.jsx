@@ -7,46 +7,14 @@ import { useAuth } from '../../context/AuthContext';
 import { useAuthNavigation } from '../../hooks/useAuthNavigation';
 import Layout from '../common/Layout';
 import Form from '../common/Form';
+import { registerFormFields } from '../../constants/formFields';
+import { useFormSubmit } from '../../hooks/useFormSubmit';
+import { ROUTES } from '../../constants/routes';
 
 const RegisterForm = () => {
   const { register, isLoading } = useAuth();
   const { onRegisterSuccess } = useAuthNavigation();
-
-  const fields = [
-    {
-      name: 'name',
-      type: 'text',
-      placeholder: 'Full Name',
-      required: true
-    },
-    {
-      name: 'email',
-      type: 'email',
-      placeholder: 'Email address',
-      required: true
-    },
-    {
-      name: 'password',
-      type: 'password',
-      placeholder: 'Password',
-      required: true
-    },
-    {
-      name: 'passwordConfirm',
-      type: 'password',
-      placeholder: 'Confirm Password',
-      required: true
-    }
-  ];
-
-  const handleSubmit = async (formData) => {
-    try {
-      await register(formData);
-      onRegisterSuccess();
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  const handleSubmit = useFormSubmit(register, onRegisterSuccess);
 
   return (
     <Layout
@@ -55,7 +23,7 @@ const RegisterForm = () => {
       subtitle="Or"
       subtitleLink={
         <Link 
-          to="/login"
+          to={ROUTES.LOGIN}
           className="font-medium text-indigo-600 hover:text-indigo-500"
         >
           sign in to your account
@@ -63,7 +31,7 @@ const RegisterForm = () => {
       }
     >
       <Form
-        fields={fields}
+        fields={registerFormFields}
         onSubmit={handleSubmit}
         submitText="Sign up"
         isLoading={isLoading}
