@@ -1,80 +1,16 @@
-/**
- * Tea Service
- * Handles all tea-related API interactions with consistent error handling and data transformation
- */
 import api from './api';
-
-const transformTeaResponse = (response) => ({
-  ...response.data,
-  products: response.data.products?.map(product => ({
-    ...product,
-    price: Number(product.price).toFixed(2)
-  }))
-});
-
-const handleApiError = (error) => {
-  const message = error.response?.data?.message || 'An unexpected error occurred';
-  throw new Error(message);
-};
 
 export const teaService = {
   // Read operations
-  getAllTeas: async (params = {}) => {
-    try {
-      const response = await api.get('/teas/search', { params });
-      return transformTeaResponse(response);
-    } catch (error) {
-      handleApiError(error);
-    }
-  },
-
-  getTeaById: async (id) => {
-    try {
-      const response = await api.get(`/teas/${id}`);
-      return response.data;
-    } catch (error) {
-      handleApiError(error);
-    }
-  },
-
-  getTeasByCategory: async (category) => {
-    return teaService.getAllTeas({ category });
-  },
+  getAllTeas: () => api.get('/teas/search').then(res => res.data.products),
+  getTeaById: (id) => api.get(`/teas/${id}`).then(res => res.data),
+  getTeasByCategory: (category) => api.get(`/teas/search?category=${category}`).then(res => res.data.products),
   
   // Write operations
-  createTea: async (teaData) => {
-    try {
-      const response = await api.post('/teas', teaData);
-      return response.data;
-    } catch (error) {
-      handleApiError(error);
-    }
-  },
-
-  updateTea: async (id, teaData) => {
-    try {
-      const response = await api.put(`/teas/${id}`, teaData);
-      return response.data;
-    } catch (error) {
-      handleApiError(error);
-    }
-  },
-
-  deleteTea: async (id) => {
-    try {
-      await api.delete(`/teas/${id}`);
-    } catch (error) {
-      handleApiError(error);
-    }
-  },
+  createTea: (teaData) => api.post('/teas', teaData),
+  updateTea: (id, teaData) => api.put(`/teas/${id}`, teaData),
+  deleteTea: (id) => api.delete(`/teas/${id}`),
   
   // Category operations
-  getCategories: async () => {
-    try {
-      const response = await api.get('/teas/categories');
-      return response.data;
-    } catch (error) {
-      handleApiError(error);
-    }
-  }
+  getCategories: () => api.get('/teas/categories').then(res => res.data)
 };

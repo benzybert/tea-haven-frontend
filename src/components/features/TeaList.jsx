@@ -7,7 +7,7 @@ import { useTeas } from '../../hooks/useTeas';
 import LoadingSpinner from '../common/LoadingSpinner';
 import ErrorMessage from '../common/ErrorMessage';
 import CategoryFilter from '../common/CategoryFilter';
-import TeaGrid from '../common/TeaGrid';
+import TeaGrid from '../features/TeaGrid';
 
 // Presentation Component
 const TeaListView = ({ 

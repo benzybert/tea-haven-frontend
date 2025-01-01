@@ -1,6 +1,5 @@
 import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
-import { CartProvider } from './context/CartContext';
 
 // Layout Components
 import Header from './components/layout/Header';
@@ -12,7 +11,6 @@ import AppRoutes from './components/routing/AppRoutes';
 function App() {
   return (
     <AuthProvider>
-      <CartProvider>
         <BrowserRouter>
           <div className="min-h-screen flex flex-col">
             <Header />
@@ -22,7 +20,6 @@ function App() {
             <Footer />
           </div>
         </BrowserRouter>
-      </CartProvider>
     </AuthProvider>
   );
 }

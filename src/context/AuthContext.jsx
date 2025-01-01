@@ -4,6 +4,10 @@ import { authService } from '../services/auth';
 import { setTokens, removeTokens } from '../utils/tokenStorage';
 import useTokenAuth from '../hooks/useTokenAuth';
 
+/**
+ * AuthContext
+ * Provides authentication state and methods to the application
+ */
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
