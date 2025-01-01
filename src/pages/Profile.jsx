@@ -5,16 +5,14 @@ import { handleAsyncOperation } from '../utils/errorHandling';
 import { STYLES } from '../utils/styles';
 
 import Layout from '../components/common/Layout';
-import Button from '../components/forms/Button';
 import ErrorMessage from '../components/common/ErrorMessage';
 import ProfileInfo from '../components/profile/ProfileInfo';
 import ProfileActions from '../components/profile/ProfileActions';
-import { PasswordChangeForm } from '../components/auth/password';
+import AccountSettings from '../components/profile/AccountSettings';
 
-const Profile = () => {
-  const { user, logout } = useAuth();
+const useLogout = () => {
+  const { logout } = useAuth();
   const navigate = useNavigate();
-  const [showPasswordForm, setShowPasswordForm] = useState(false);
   const [error, setError] = useState(null);
 
   const handleLogout = async () => {
@@ -30,6 +28,13 @@ const Profile = () => {
     );
   };
 
+  return { handleLogout, error };
+};
+
+const Profile = () => {
+  const { user } = useAuth();
+  const { handleLogout, error } = useLogout();
+
   return (
     <Layout type="default">
       <div className={STYLES.card.container}>
@@ -40,24 +45,7 @@ const Profile = () => {
           
           <div className={STYLES.spacing.section}>
             <ProfileInfo user={user} />
-
-            <div>
-              <h3 className={STYLES.text.subheading}>Account Settings</h3>
-              {!showPasswordForm ? (
-                <Button
-                  variant="secondary"
-                  onClick={() => setShowPasswordForm(true)}
-                  className="mt-4"
-                >
-                  Change Password
-                </Button>
-              ) : (
-                <PasswordChangeForm
-                  onSuccess={() => setShowPasswordForm(false)}
-                  onCancel={() => setShowPasswordForm(false)}
-                />
-              )}
-            </div>
+            <AccountSettings />
           </div>
         </div>
       </div>

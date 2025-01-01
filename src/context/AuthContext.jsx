@@ -1,8 +1,7 @@
 // src/context/AuthContext.jsx
 import React, { createContext, useContext, useEffect } from 'react';
-import { authService } from '../services/auth';
-import { setTokens, removeTokens } from '../utils/tokenStorage';
 import useTokenAuth from '../hooks/useTokenAuth';
+import { useAuthMethods } from '../hooks/useAuthMethods';
 
 /**
  * AuthContext
@@ -22,46 +21,11 @@ export const AuthProvider = ({ children }) => {
     isAuthenticated
   } = useTokenAuth();
 
+  const { login, register, logout } = useAuthMethods(setUser, setIsLoading, setError);
+
   useEffect(() => {
     validateToken();
   }, [validateToken]);
-
-  const login = async (credentials) => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const { data } = await authService.login(credentials);
-      setTokens(data.token, data.refreshToken);
-      setUser(data.user);
-      return data.user;
-    } catch (err) {
-      setError(err.response?.data?.message || 'Login failed');
-      throw err;
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const register = async (userData) => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const { data } = await authService.register(userData);
-      setTokens(data.token, data.refreshToken);
-      setUser(data.user);
-      return data.user;
-    } catch (err) {
-      setError(err.response?.data?.message || 'Registration failed');
-      throw err;
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const logout = () => {
-    removeTokens();
-    setUser(null);
-  };
 
   return (
     <AuthContext.Provider value={{

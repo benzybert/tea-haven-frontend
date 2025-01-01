@@ -7,7 +7,7 @@ import { publicRoutes, protectedRoutes } from '../../constants/routes';
 import ProtectedRoute from '../auth/ProtectedRoute';
 
 const AppRoutes = () => {
-  const { isAuthenticated, isLoading } = useAuth();
+  const { isLoading } = useAuth();
 
   if (isLoading) {
     return (
@@ -19,6 +19,7 @@ const AppRoutes = () => {
 
   return (
     <Routes>
+      {/* Public Routes */}
       {publicRoutes.map(({ path, element }) => (
         <Route
           key={path}
@@ -30,7 +31,8 @@ const AppRoutes = () => {
           }
         />
       ))}
-      
+
+      {/* Protected Routes */}
       {protectedRoutes.map(({ path, element }) => (
         <Route
           key={path}
@@ -45,8 +47,9 @@ const AppRoutes = () => {
         />
       ))}
 
-      <Route 
-        path="*" 
+      {/* 404 Route */}
+      <Route
+        path="*"
         element={
           <Layout type="default">
             <div className="text-center py-12">
@@ -54,7 +57,7 @@ const AppRoutes = () => {
               <p className="mt-2 text-gray-600">The page you're looking for doesn't exist.</p>
             </div>
           </Layout>
-        } 
+        }
       />
     </Routes>
   );
