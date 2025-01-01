@@ -1,4 +1,4 @@
-import api from '../utils/axios';
+import api from './api';
 
 export const teaService = {
   // Read operations
