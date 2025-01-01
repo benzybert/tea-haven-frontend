@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import TeaProductCard from './TeaProductCard';
+import { TeaItemPropType } from '../../types/tea';
 
 const EmptyState = () => (
   <div className="text-center py-12">
@@ -33,16 +34,7 @@ const TeaGrid = ({ items = [] }) => {
 };
 
 TeaGrid.propTypes = {
-  items: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      description: PropTypes.string.isRequired,
-      imageUrl: PropTypes.string.isRequired,
-      category: PropTypes.string.isRequired
-    })
-  )
+  items: PropTypes.arrayOf(TeaItemPropType)
 };
 
 export default TeaGrid; 

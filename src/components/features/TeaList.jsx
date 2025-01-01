@@ -9,6 +9,7 @@ import LoadingSpinner from '../common/LoadingSpinner';
 import ErrorMessage from '../common/ErrorMessage';
 import CategoryFilter from '../common/CategoryFilter';
 import TeaGrid from './TeaGrid';
+import { TeaItemPropType } from '../../types/tea';
 
 const LastUpdated = ({ timestamp }) => (
   <span className="text-sm text-gray-500">
@@ -46,16 +47,7 @@ const TeaListView = ({
 );
 
 TeaListView.propTypes = {
-  teas: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      description: PropTypes.string.isRequired,
-      imageUrl: PropTypes.string.isRequired,
-      category: PropTypes.string.isRequired
-    })
-  ).isRequired,
+  teas: PropTypes.arrayOf(TeaItemPropType).isRequired,
   selectedCategory: PropTypes.string,
   onCategoryChange: PropTypes.func.isRequired,
   lastUpdated: PropTypes.string
