@@ -1,6 +1,4 @@
 import React from 'react';
-import { useForm } from '../../../hooks/useForm';
-import { FORM_SCHEMAS } from '../../../utils/validation';
 import { handleAsyncOperation } from '../../../utils/errorHandling';
 import { authService } from '../../../services/auth';
 import Form from '../../common/Form';
