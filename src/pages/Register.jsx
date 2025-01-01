@@ -1,12 +1,11 @@
 import React from 'react';
-import RegisterForm from '../components/presentational/auth/RegisterForm';
+import RegisterForm from '../forms/templates/auth/RegisterForm';
+import { useAuth } from '../hooks/useAuth';
 
 const Register = () => {
-  return (
-    <div className="container mx-auto px-4">
-      <RegisterForm />
-    </div>
-  );
+  const { register } = useAuth();
+
+  return <RegisterForm onSubmit={register} />;
 };
 
 export default Register;

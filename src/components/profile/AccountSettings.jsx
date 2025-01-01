@@ -1,25 +1,24 @@
 import React, { useState } from 'react';
-import Button from '../forms/Button';
-import { PasswordChangeForm } from '../auth/password';
-import { STYLES } from '../../utils/styles';
+import Button from '../common/Button';
+import PasswordChangeForm from '../../forms/templates/auth/password/PasswordChangeForm';
+import { useAuth } from '../../hooks/useAuth';
 
 const AccountSettings = () => {
   const [showPasswordForm, setShowPasswordForm] = useState(false);
+  const { changePassword } = useAuth();
 
   return (
-    <div>
-      <h3 className={STYLES.text.subheading}>Account Settings</h3>
+    <div className="space-y-6">
       {!showPasswordForm ? (
         <Button
           variant="secondary"
           onClick={() => setShowPasswordForm(true)}
-          className="mt-4"
         >
           Change Password
         </Button>
       ) : (
         <PasswordChangeForm
-          onSuccess={() => setShowPasswordForm(false)}
+          onSubmit={changePassword}
           onCancel={() => setShowPasswordForm(false)}
         />
       )}
