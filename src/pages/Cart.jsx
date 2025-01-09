@@ -4,7 +4,7 @@ import { useCart } from '../hooks/useCart';
 import { ROUTES } from '../constants/routes';
 import Button from '../components/common/Button';
 
-const CartItem = ({ id, name, price, quantity, imageUrl, removeFromCart, updateQuantity }) => (
+const CartItem = ({ id, name, price, quantity, imageUrl, category, description, removeFromCart, updateQuantity }) => (
   <div className="flex items-center py-5 border-b">
     <img 
       src={imageUrl} 
@@ -14,6 +14,12 @@ const CartItem = ({ id, name, price, quantity, imageUrl, removeFromCart, updateQ
     <div className="flex-1 ml-4">
       <h3 className="text-lg font-medium text-gray-900">{name}</h3>
       <p className="mt-1 text-sm text-gray-500">${price} per 100g</p>
+      <div className="mt-1">
+        <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-indigo-100 text-indigo-800">
+          {category}
+        </span>
+      </div>
+      <p className="mt-1 text-sm text-gray-500 line-clamp-1">{description}</p>
     </div>
     <div className="flex items-center space-x-4">
       <div className="flex items-center border rounded">

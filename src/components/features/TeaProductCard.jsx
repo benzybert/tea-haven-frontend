@@ -9,7 +9,14 @@ const TeaProductCard = ({ id, name, price, description, imageUrl, category }) =>
   const { addToCart } = useCart();
   
   const handleAddToCart = () => {
-    addToCart({ id, name, price, imageUrl });
+    addToCart({
+      id,
+      name,
+      price,
+      description,
+      imageUrl,
+      category
+    });
   };
 
   return (
