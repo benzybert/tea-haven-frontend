@@ -8,16 +8,19 @@ export const CartProvider = ({ children }) => {
 
   const addToCart = useCallback((product, quantity = 1) => {
     setItems(currentItems => {
-      const existingItem = currentItems.find(item => item.id === product.id);
+      const existingItemIndex = currentItems.findIndex(item => item.id === product.id);
       
-      if (existingItem) {
-        return currentItems.map(item =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + quantity }
-            : item
-        );
+      if (existingItemIndex >= 0) {
+        // Create a new array with the updated item
+        const newItems = [...currentItems];
+        newItems[existingItemIndex] = {
+          ...currentItems[existingItemIndex],
+          quantity: currentItems[existingItemIndex].quantity + quantity
+        };
+        return newItems;
       }
       
+      // Add new item
       return [...currentItems, { ...product, quantity }];
     });
   }, []);

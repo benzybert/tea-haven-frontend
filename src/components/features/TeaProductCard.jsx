@@ -9,14 +9,16 @@ const TeaProductCard = ({ id, name, price, description, imageUrl, category }) =>
   const { addToCart } = useCart();
   
   const handleAddToCart = () => {
-    addToCart({
+    const product = {
       id,
       name,
       price,
       description,
       imageUrl,
       category
-    });
+    };
+    console.log('Adding to cart:', product);
+    addToCart(product);
   };
 
   return (
