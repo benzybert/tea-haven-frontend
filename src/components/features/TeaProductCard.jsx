@@ -16,20 +16,23 @@ const TeaProductCard = ({
 }) => {
   const { addToCart } = useCart();
   
+  const getFullImageUrl = (url) => {
+    if (!url) return '/images/products/tea-placeholder.jpg';
+    return url.startsWith('/') ? url : `/images/products/${url}`;
+  };
+
   const handleAddToCart = () => {
     const product = {
       id: originalId || _id,
       name,
       price,
       description,
-      imageUrl: imageUrl.startsWith('/') ? imageUrl : `/images/products/${imageUrl}`,
+      imageUrl: getFullImageUrl(imageUrl),
       category
     };
     console.log('Adding to cart:', product);
     addToCart(product);
   };
-
-  const fullImageUrl = imageUrl.startsWith('/') ? imageUrl : `/images/products/${imageUrl}`;
 
   return (
     <div className="
@@ -39,7 +42,7 @@ const TeaProductCard = ({
       transition-all duration-300
     ">
       <ProductImage 
-        imageUrl={fullImageUrl} 
+        imageUrl={getFullImageUrl(imageUrl)} 
         name={name} 
         category={category} 
       />

@@ -3,15 +3,17 @@ import { Link } from 'react-router-dom';
 import { ROUTES } from '../../constants/routes';
 
 const HeroSection = () => (
-  <div className="relative min-h-[80vh] flex items-start justify-center overflow-hidden">
-    {/* Background Image with Overlay */}
+  <div className="relative min-h-[70vh] flex items-start justify-center overflow-hidden">
+    {/* Background Image */}
     <div 
-      className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+      className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-60"
       style={{
-        backgroundImage: 'url("/images/tea_back.webp")',
-        filter: 'brightness(0.7)'
+        backgroundImage: 'url("/images/tea_back.webp")'
       }}
     />
+    
+    {/* Dark Overlay */}
+    <div className="absolute inset-0 bg-black opacity-40" />
     
     {/* Content */}
     <div className="relative text-center text-white px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto" style={{ marginTop: '20vh' }}>
