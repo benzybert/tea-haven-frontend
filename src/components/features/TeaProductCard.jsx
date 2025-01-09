@@ -5,12 +5,12 @@ import ProductImage from './product/ProductImage';
 import ProductInfo from './product/ProductInfo';
 import Button from '../common/Button';
 
-const TeaProductCard = ({ id, name, price, description, imageUrl, category }) => {
+const TeaProductCard = ({ _id, originalId, name, price, description, imageUrl, category }) => {
   const { addToCart } = useCart();
   
   const handleAddToCart = () => {
     const product = {
-      id,
+      id: originalId || _id,
       name,
       price,
       description,
@@ -51,7 +51,8 @@ const TeaProductCard = ({ id, name, price, description, imageUrl, category }) =>
 };
 
 TeaProductCard.propTypes = {
-  id: PropTypes.string.isRequired,
+  _id: PropTypes.string,
+  originalId: PropTypes.number,
   name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   description: PropTypes.string.isRequired,
