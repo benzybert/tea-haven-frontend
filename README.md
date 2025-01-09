@@ -6,8 +6,10 @@ Welcome to the Tea Haven E-commerce frontend repository. This README provides an
 
 - [Project Overview](#project-overview)
 - [Technologies Used](#technologies-used)
+- [Authentication Features](#authentication-features)
 - [Getting Started](#getting-started)
-- [Folder Structure](#folder-structure)
+- [Environment Setup](#environment-setup)
+- [Project Structure](#project-structure)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -16,12 +18,18 @@ Welcome to the Tea Haven E-commerce frontend repository. This README provides an
 Tea Haven is an e-commerce platform for tea enthusiasts. This repository contains the frontend codebase, which is responsible for the user interface and client-side functionality.
 
 ## Technologies Used
-- React: A JavaScript library for building user interfaces.
-- Redux: A predictable state container for JavaScript apps.
-- React Router: A collection of navigational components for React applications.
-- Axios: A promise-based HTTP client for the browser and Node.js.
-- Styled Components: A library for styling React components using tagged template literals.
-- Jest: A delightful JavaScript testing framework with a focus on simplicity.
+- React 18.3.1
+- React Router DOM 7.0.2
+- Axios 1.7.9
+- Tailwind CSS 3.4.16
+
+## Authentication Features
+
+- User authentication using Context API
+- Protected routes for authenticated users
+- Login and registration functionality
+- User profile management
+- Session handling
 
 ## Getting Started
 
@@ -36,20 +44,24 @@ To get a local copy of the project up and running, follow these steps:
 
 1. Clone the repository:
     ```sh
-    git clone https://github.com/your-username/tea-haven-ecommerce.git
+    git clone https://github.com/benzybert/tea-haven-frontend.git
     ```
-2. Navigate to the frontend directory:
+2. Navigate to the project directory:
     ```sh
-    cd tea-haven-ecommerce/frontend
+    cd tea-haven-frontend
     ```
 3. Install dependencies:
     ```sh
     npm install
     ```
-    or
-    ```sh
-    yarn install
-    ```
+
+## Environment Setup
+
+Create a `.env` file in the root directory with the following variables:
+
+```env
+REACT_APP_API_URL=your_backend_api_url
+```
 
 ### Running the Application
 
@@ -57,36 +69,43 @@ To start the development server, run:
 ```sh
 npm start
 ```
-or
-```sh
-yarn start
-```
+
 The application will be available at `http://localhost:3000`.
 
-## Folder Structure
+## Project Structure
 
 ```
-frontend/
+tea-haven-frontend/
 ├── public/
 ├── src/
-│   ├── assets/
 │   ├── components/
+│   │   ├── container/      # Container components
+│   │   └── presentational/ # Presentational components
+│   ├── context/
+│   │   ├── AuthContext.jsx # Authentication context
+│   │   └── CartContext.jsx # Shopping cart context
+│   ├── hooks/             # Custom React hooks
 │   ├── pages/
-│   ├── redux/
-│   ├── services/
-│   ├── styles/
-│   ├── utils/
-│   ├── App.js
-│   ├── index.js
-│   └── ...
+│   │   ├── About.jsx
+│   │   ├── Cart.jsx
+│   │   ├── Home.jsx
+│   │   ├── Login.jsx
+│   │   ├── Products.js
+│   │   ├── Profile.jsx
+│   │   └── Register.jsx
+│   ├── services/          # API service functions
+│   ├── styles/            # Global styles and Tailwind config
+│   ├── utils/             # Utility functions
+│   ├── App.jsx            # Root component
+│   └── index.js           # Application entry point
 ├── package.json
 └── README.md
 ```
 
 ## Contributing
 
-Contributions are welcome! Please read the [contributing guidelines](CONTRIBUTING.md) for more information.
+Contributions are welcome! Please read the contributing guidelines for more information.
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License. See the LICENSE file for details.
