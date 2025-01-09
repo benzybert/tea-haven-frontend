@@ -5,7 +5,15 @@ import ProductImage from './product/ProductImage';
 import ProductInfo from './product/ProductInfo';
 import Button from '../common/Button';
 
-const TeaProductCard = ({ _id, originalId, name, price, description, imageUrl, category }) => {
+const TeaProductCard = ({ 
+  _id, 
+  originalId, 
+  name, 
+  price, 
+  description, 
+  imageUrl = 'tea-placeholder.jpg', 
+  category 
+}) => {
   const { addToCart } = useCart();
   
   const handleAddToCart = () => {
@@ -14,12 +22,14 @@ const TeaProductCard = ({ _id, originalId, name, price, description, imageUrl, c
       name,
       price,
       description,
-      imageUrl,
+      imageUrl: imageUrl.startsWith('/') ? imageUrl : `/images/products/${imageUrl}`,
       category
     };
     console.log('Adding to cart:', product);
     addToCart(product);
   };
+
+  const fullImageUrl = imageUrl.startsWith('/') ? imageUrl : `/images/products/${imageUrl}`;
 
   return (
     <div className="
@@ -29,7 +39,7 @@ const TeaProductCard = ({ _id, originalId, name, price, description, imageUrl, c
       transition-all duration-300
     ">
       <ProductImage 
-        imageUrl={imageUrl} 
+        imageUrl={fullImageUrl} 
         name={name} 
         category={category} 
       />
@@ -56,8 +66,12 @@ TeaProductCard.propTypes = {
   name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   description: PropTypes.string.isRequired,
-  imageUrl: PropTypes.string.isRequired,
+  imageUrl: PropTypes.string,
   category: PropTypes.string.isRequired
+};
+
+TeaProductCard.defaultProps = {
+  imageUrl: 'tea-placeholder.jpg'
 };
 
 export default TeaProductCard;
