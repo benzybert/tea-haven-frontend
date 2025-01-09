@@ -1,9 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useCart } from '../../hooks/useCart';
 import ProductImage from './product/ProductImage';
 import ProductInfo from './product/ProductInfo';
+import Button from '../common/Button';
 
-const TeaProductCard = ({ name, price, description, imageUrl, category }) => {
+const TeaProductCard = ({ id, name, price, description, imageUrl, category }) => {
+  const { addToCart } = useCart();
+  
+  const handleAddToCart = () => {
+    addToCart({ id, name, price, imageUrl });
+  };
+
   return (
     <div className="
       group relative max-w-sm rounded-xl overflow-hidden
@@ -21,11 +29,20 @@ const TeaProductCard = ({ name, price, description, imageUrl, category }) => {
         price={price} 
         description={description} 
       />
+      <div className="p-5 pt-0">
+        <Button
+          onClick={handleAddToCart}
+          className="w-full"
+        >
+          Add to Cart
+        </Button>
+      </div>
     </div>
   );
 };
 
 TeaProductCard.propTypes = {
+  id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   description: PropTypes.string.isRequired,
