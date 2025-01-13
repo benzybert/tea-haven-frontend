@@ -3,6 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import Header from './components/layout/Header';
 import AppRoutes from './components/routing/AppRoutes';
+import { TeaChatbot } from './components/features/TeaChatbot';
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
           <main>
             <AppRoutes />
           </main>
+          <TeaChatbot />
         </div>
       </AuthProvider>
     </BrowserRouter>
