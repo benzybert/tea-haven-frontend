@@ -4,6 +4,7 @@ import { AuthProvider } from './context/AuthContext';
 import CartProvider from './context/CartContext';
 import Header from './components/layout/Header';
 import AppRoutes from './components/routing/AppRoutes';
+import { TeaChatbot } from './components/features/TeaChatbot';
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
             <main>
               <AppRoutes />
             </main>
+            <TeaChatbot />
           </div>
         </CartProvider>
       </AuthProvider>
