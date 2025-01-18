@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
-import CartProvider from './context/CartContext';
+import { CartProvider } from './context/CartContext';
 import Header from './components/layout/Header';
 import AppRoutes from './components/routing/AppRoutes';
 import { TeaChatbot } from './components/features/TeaChatbot';
