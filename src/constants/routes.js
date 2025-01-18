@@ -1,6 +1,7 @@
 import Home from '../pages/Home';
 import Products from '../pages/Products';
 import Profile from '../pages/Profile';
+import Cart from '../pages/Cart';
 import LoginForm from '../forms/templates/auth/LoginForm';
 import RegisterForm from '../forms/templates/auth/RegisterForm';
 import ForgotPasswordForm from '../forms/templates/auth/password/ForgotPasswordForm';
@@ -35,6 +36,7 @@ export const AUTH_ROUTES = [
 export const publicRoutes = [
   { path: ROUTES.HOME, element: <Home /> },
   { path: ROUTES.PRODUCTS, element: <Products /> },
+  { path: ROUTES.CART, element: <Cart /> },
   { path: ROUTES.LOGIN, element: <LoginForm /> },
   { path: ROUTES.REGISTER, element: <RegisterForm /> },
   { path: ROUTES.FORGOT_PASSWORD, element: <ForgotPasswordForm /> },
