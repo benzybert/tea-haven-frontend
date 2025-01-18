@@ -1,52 +1,40 @@
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
-import { authService } from '../services/auth';
 import { ROUTES } from '../constants/routes';
 
 export const useAuth = () => {
   const navigate = useNavigate();
-  const { user, setUser } = useContext(AuthContext);
+  const context = useContext(AuthContext);
 
-  const login = async (credentials) => {
-    const data = await authService.login(credentials);
-    setUser(data.user);
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+
+  const { user, setUser, login, register, forgotPassword } = context;
+
+  const wrappedLogin = async (credentials) => {
+    await login(credentials);
     navigate(ROUTES.HOME);
   };
 
-  const register = async (userData) => {
-    const data = await authService.register(userData);
-    setUser(data.user);
+  const wrappedRegister = async (userData) => {
+    await register(userData);
     navigate(ROUTES.HOME);
   };
 
-  const logout = async () => {
-    await authService.logout();
+  const logout = () => {
+    localStorage.removeItem('token');
     setUser(null);
-    navigate(ROUTES.LOGIN);
-  };
-
-  const changePassword = async (data) => {
-    await authService.changePassword(data);
-  };
-
-  const forgotPassword = async (email) => {
-    await authService.forgotPassword(email);
-  };
-
-  const resetPassword = async (token, password) => {
-    await authService.resetPassword(token, password);
     navigate(ROUTES.LOGIN);
   };
 
   return {
     user,
-    login,
-    register,
+    isAuthenticated: !!user,
+    login: wrappedLogin,
+    register: wrappedRegister,
     logout,
-    changePassword,
-    forgotPassword,
-    resetPassword,
-    isAuthenticated: !!user
+    forgotPassword
   };
-}; 
+};

@@ -29,12 +29,46 @@ export const AuthProvider = ({ children }) => {
     validateToken();
   }, []);
 
+  const login = async (credentials) => {
+    try {
+      const response = await authService.login(credentials);
+      setUser(response.user);
+      return response;
+    } catch (err) {
+      setError(err.message);
+      throw err;
+    }
+  };
+
+  const register = async (userData) => {
+    try {
+      const response = await authService.register(userData);
+      setUser(response.user);
+      return response;
+    } catch (err) {
+      setError(err.message);
+      throw err;
+    }
+  };
+
+  const forgotPassword = async (email) => {
+    try {
+      return await authService.forgotPassword(email);
+    } catch (err) {
+      setError(err.message);
+      throw err;
+    }
+  };
+
   const value = {
     user,
     setUser,
     isLoading,
     error,
-    isAuthenticated: !!user
+    isAuthenticated: !!user,
+    login,
+    register,
+    forgotPassword
   };
 
   if (isLoading) {
